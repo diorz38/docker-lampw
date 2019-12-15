@@ -11,7 +11,6 @@ else
         -e "s/^post_max_size.*/post_max_size = ${PHP_POST_MAX_SIZE}/" /etc/php/7.2/apache2/php.ini
 fi
 
-
 sed -i "s/export APACHE_RUN_GROUP=www-data/export APACHE_RUN_GROUP=staff/" /etc/apache2/envvars
 
 if [ -n "$APACHE_ROOT" ];then
@@ -63,5 +62,7 @@ if [[ ! -d $VOLUME_HOME/mysql ]]; then
 else
     echo "=> Using an existing volume of MySQL"
 fi
+
+/usr/bin/touch /var/webmin/miniserv.log
 
 exec supervisord -n

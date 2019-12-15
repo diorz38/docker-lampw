@@ -1,8 +1,7 @@
 FROM phusion/baseimage:0.11
-MAINTAINER Karim Ryde karye.webb@gmail.com
-ENV REFRESHED_AT 2019-06-11
+ENV REFRESHED_AT 2019-12-15
 
-# based on mattrayner/lamp and dgraziotin/lamp 
+# Based on mattrayner/lamp and dgraziotin/lamp 
 # MAINTAINER Matthew Rayner <matt@mattrayner.co.uk>
 # MAINTAINER Daniel Graziotin <daniel@ineed.coffee>
 
@@ -35,7 +34,7 @@ RUN add-apt-repository -y ppa:ondrej/php && \
 
 # needed for phpMyAdmin
 RUN ln -s /etc/php/7.1/mods-available/mcrypt.ini /etc/php/7.3/mods-available/ && \
-  phpenmod mcrypt
+    phpenmod mcrypt
 
 # Add image configuration and scripts
 ADD supporting_files/start-apache2.sh /start-apache2.sh
@@ -50,7 +49,7 @@ ADD supporting_files/mysqld_innodb.cnf /etc/mysql/conf.d/mysqld_innodb.cnf
 
 # Allow mysql to bind on 0.0.0.0
 RUN sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/my.cnf && \
-  sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysqld.cnf
+    sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysqld.cnf
 
 # Set PHP timezones to Europe/Stockholm
 RUN sed -i "s/;date.timezone =/date.timezone = Europe\/Stockholm/g" /etc/php/7.3/apache2/php.ini
@@ -76,6 +75,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
     mv composer.phar /usr/local/bin/composer
 
 ENV MYSQL_PASS:-$(pwgen -s 12 1)
+
 # config to enable .htaccess
 ADD supporting_files/apache_default /etc/apache2/sites-available/000-default.conf
 RUN a2enmod rewrite
@@ -91,20 +91,19 @@ ENV PHP_POST_MAX_SIZE 10M
 # Add webmin
 RUN echo root:pass | chpasswd && \
     echo "Acquire::GzipIndexes \"false\"; Acquire::CompressionTypes::Order:: \"gz\";" >/etc/apt/apt.conf.d/docker-gzip-indexes && \
-	  apt update && \
-	  apt install -y
+	apt update && \
+	apt install -y
 RUN wget http://www.webmin.com/jcameron-key.asc && \
-	  apt-key add jcameron-key.asc
+	apt-key add jcameron-key.asc
 RUN echo "deb http://download.webmin.com/download/repository sarge contrib" >> /etc/apt/sources.list && \
     echo "deb http://webmin.mirror.somersettechsolutions.co.uk/repository sarge contrib" >> /etc/apt/sources.list && \
     apt update && \
     apt install -y webmin && \
     apt clean
 
-CMD /usr/bin/touch /var/webmin/miniserv.log && /usr/sbin/service webmin restart && /usr/bin/tail -f /var/webmin/miniserv.log
-
 # Add volumes for the app and MySql
 VOLUME  ["/etc/mysql", "/etc/webmin", "/var/lib/mysql", "/app" ]
 
 EXPOSE 80 10000
+
 CMD ["/run.sh"]

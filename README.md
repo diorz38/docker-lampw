@@ -7,22 +7,20 @@ Component | `latest-1804`
 [MySQL][mysql] |`5.7.26`
 [PHP][php] | `7.3.6`
 [phpMyAdmin][phpmyadmin] | `4.9.0.1`
-
+[Webmin][webmin] | `1.930`
 
 ## Using the image
 ### On the command line
-This is the quickest way
 ```bash
 # Launch the image
-docker run -p "8000:80" -p "10000:10000" -v ${PWD}/app:/app lamp
+docker run -d --restart unless-stopped -p 8000:80 -p 10000:10000 -v /github/app:/app --name lamp karye/lampw
+# View log
+docker logs lamp
+# Attach to console
+docker exec -it lamp bash
+# View running containers
+docker ps -a
 ```
-### webmin
-Docker-LAMPW comes pre-installed with webmin available from `https://localhost:10000`.
-You login in to webmin with user 'root' and password 'pass'.
-
-### PHPMyAdmin
-Docker-LAMPW comes pre-installed with phpMyAdmin available from `http://localhost:8000/phpmyadmin`.
-You login in to phpMyAdmin with user 'admin' and password 'pass'.
 
 ## Project layout
 The below examples assume the following project layout and that you are running the commands from the 'project root'.
@@ -30,6 +28,25 @@ The below examples assume the following project layout and that you are running 
 / (project root)
 /app/ (your PHP files live here)
 ```
+
+## Administration
+### webmin
+Docker-LAMPW comes pre-installed with webmin available from `https://localhost:10000`.\
+Login in to webmin with user 'root' and password 'pass'.
+
+### PHPMyAdmin
+Docker-LAMPW comes pre-installed with phpMyAdmin available from `http://localhost:8000/phpmyadmin`.\
+Login in to phpMyAdmin with user 'admin' and password 'pass'.
+
+## Project layout
+The below example assume the following project layout and that you are running the commands from the 'project root'.
+```
+/ (project root)
+/app/ (your PHP files live here)
+```
+
+### Volumes
+4 volumes are used: "/etc/mysql", "/etc/webmin", "/var/lib/mysql", "/app".
 
 ## License
 Docker-LAMPW is licensed under the [Apache 2.0 License][info-license].
@@ -40,6 +57,7 @@ Docker-LAMPW is licensed under the [Apache 2.0 License][info-license].
 [mysql]: https://www.mysql.com/
 [php]: http://php.net/
 [phpmyadmin]: https://www.phpmyadmin.net/
+[Webmin]: http://www.webmin.com/
 
 [end-of-life]: http://php.net/supported-versions.php
 

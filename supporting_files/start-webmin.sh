@@ -1,2 +1,2 @@
 #!/bin/bash
-exec /etc/init.d/webmin start
+exec /usr/sbin/service webmin start
