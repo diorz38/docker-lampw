@@ -22,13 +22,6 @@ docker exec -it lamp bash
 docker ps -a
 ```
 
-## Project layout
-The below examples assume the following project layout and that you are running the commands from the 'project root'.
-```
-/ (project root)
-/app/ (your PHP files live here)
-```
-
 ## Administration
 ### webmin
 Docker-LAMPW comes pre-installed with webmin available from `https://localhost:10000`.\
@@ -39,14 +32,14 @@ Docker-LAMPW comes pre-installed with phpMyAdmin available from `http://localhos
 Login in to phpMyAdmin with user 'admin' and password 'pass'.
 
 ## Project layout
-The below example assume the following project layout and that you are running the commands from the 'project root'.
+The website in '/app/' is available from `http://localhost:8000`.\
 ```
 / (project root)
 /app/ (your PHP files live here)
 ```
 
 ### Volumes
-4 volumes are used: "/etc/mysql", "/etc/webmin", "/var/lib/mysql", "/app".
+4 volumes are used for persistent storage: "/etc/mysql", "/etc/webmin", "/var/lib/mysql", "/app".
 
 ## License
 Docker-LAMPW is licensed under the [Apache 2.0 License][info-license].
@@ -63,9 +56,3 @@ Docker-LAMPW is licensed under the [Apache 2.0 License][info-license].
 
 [info-docker-hub]: https://hub.docker.com/r/mattrayner/lamp
 [info-license]: LICENSE
-
-[shield-build-status]: https://img.shields.io/circleci/project/mattrayner/docker-lamp.svg
-[shield-docker-hub]: https://img.shields.io/badge/docker%20hub-mattrayner%2Flamp-brightgreen.svg
-[shield-license]: https://img.shields.io/badge/license-Apache%202.0-blue.svg
-
-[dgraziotin-lamp]: https://github.com/dgraziotin/osx-docker-lamp
