@@ -12,7 +12,7 @@ Component | `latest-1804`
 ## Using the image
 ### On the command line
 ```bash
-# Launch the image
+# Launch the image with autostart when docker start
 docker run -d --restart unless-stopped -p 8000:80 -p 10000:10000 -v /github/app:/app --name lamp karye/lampw
 # View log
 docker logs lamp
@@ -25,11 +25,11 @@ docker ps -a
 ## Administration
 ### webmin
 Docker-LAMPW comes pre-installed with webmin available from `https://localhost:10000`.\
-Login in to webmin with user 'root' and password 'pass'.
+Login in with user 'root' and password 'pass'.
 
 ### PHPMyAdmin
 Docker-LAMPW comes pre-installed with phpMyAdmin available from `http://localhost:8000/phpmyadmin`.\
-Login in to phpMyAdmin with user 'admin' and password 'pass'.
+Login in with user 'admin' and password 'pass'.
 
 ## Project layout
 The website in '/app/' is available from `http://localhost:8000`.\
