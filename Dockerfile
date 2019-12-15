@@ -1,8 +1,9 @@
 FROM phusion/baseimage:0.11
-MAINTAINER Matthew Rayner <hello@rayner.io>
+MAINTAINER Karim Ryde karye.webb@gmail.com
 ENV REFRESHED_AT 2019-06-11
 
-# based on dgraziotin/lamp
+# based on mattrayner/lamp and dgraziotin/lamp 
+# MAINTAINER Matthew Rayner <matt@mattrayner.co.uk>
 # MAINTAINER Daniel Graziotin <daniel@ineed.coffee>
 
 ENV DOCKER_USER_ID 501 
@@ -25,12 +26,12 @@ RUN groupmod -g ${BOOT2DOCKER_GID} staff
 # Install packages
 ENV DEBIAN_FRONTEND noninteractive
 RUN add-apt-repository -y ppa:ondrej/php && \
-  apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C && \
-  apt-get update && \
-  apt-get -y upgrade && \
-  apt-get -y install supervisor wget git apache2 php-xdebug libapache2-mod-php mysql-server php-mysql pwgen php-apcu php7.1-mcrypt php-gd php-xml php-mbstring php-gettext zip unzip php-zip curl php-curl && \
-  apt-get -y autoremove && \
-  echo "ServerName localhost" >> /etc/apache2/apache2.conf
+    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C && \
+    apt update && \
+    apt -y upgrade && \
+    apt -y install supervisor wget git apache2 php-xdebug libapache2-mod-php mysql-server php-mysql pwgen php-apcu php7.1-mcrypt php-gd php-xml php-mbstring php-gettext zip unzip php-zip curl php-curl && \
+    apt -y autoremove && \
+    echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 # needed for phpMyAdmin
 RUN ln -s /etc/php/7.1/mods-available/mcrypt.ini /etc/php/7.3/mods-available/ && \
@@ -39,19 +40,21 @@ RUN ln -s /etc/php/7.1/mods-available/mcrypt.ini /etc/php/7.3/mods-available/ &&
 # Add image configuration and scripts
 ADD supporting_files/start-apache2.sh /start-apache2.sh
 ADD supporting_files/start-mysqld.sh /start-mysqld.sh
+ADD supporting_files/start-webmin.sh /start-webmin.sh
 ADD supporting_files/run.sh /run.sh
 RUN chmod 755 /*.sh
 ADD supporting_files/supervisord-apache2.conf /etc/supervisor/conf.d/supervisord-apache2.conf
 ADD supporting_files/supervisord-mysqld.conf /etc/supervisor/conf.d/supervisord-mysqld.conf
+ADD supporting_files/supervisord-webmin.conf /etc/supervisor/conf.d/supervisord-webmin.conf
 ADD supporting_files/mysqld_innodb.cnf /etc/mysql/conf.d/mysqld_innodb.cnf
 
 # Allow mysql to bind on 0.0.0.0
 RUN sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/my.cnf && \
   sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysqld.cnf
 
-# Set PHP timezones to Europe/London
-RUN sed -i "s/;date.timezone =/date.timezone = Europe\/London/g" /etc/php/7.3/apache2/php.ini
-RUN sed -i "s/;date.timezone =/date.timezone = Europe\/London/g" /etc/php/7.3/cli/php.ini
+# Set PHP timezones to Europe/Stockholm
+RUN sed -i "s/;date.timezone =/date.timezone = Europe\/Stockholm/g" /etc/php/7.3/apache2/php.ini
+RUN sed -i "s/;date.timezone =/date.timezone = Europe\/Stockholm/g" /etc/php/7.3/cli/php.ini
 
 # Remove pre-installed database
 RUN rm -rf /var/lib/mysql
@@ -85,8 +88,23 @@ ADD app/ /app
 ENV PHP_UPLOAD_MAX_FILESIZE 10M
 ENV PHP_POST_MAX_SIZE 10M
 
-# Add volumes for the app and MySql
-VOLUME  ["/etc/mysql", "/var/lib/mysql", "/app" ]
+# Add webmin
+RUN echo root:pass | chpasswd && \
+    echo "Acquire::GzipIndexes \"false\"; Acquire::CompressionTypes::Order:: \"gz\";" >/etc/apt/apt.conf.d/docker-gzip-indexes && \
+	  apt update && \
+	  apt install -y
+RUN wget http://www.webmin.com/jcameron-key.asc && \
+	  apt-key add jcameron-key.asc
+RUN echo "deb http://download.webmin.com/download/repository sarge contrib" >> /etc/apt/sources.list && \
+    echo "deb http://webmin.mirror.somersettechsolutions.co.uk/repository sarge contrib" >> /etc/apt/sources.list && \
+    apt update && \
+    apt install -y webmin && \
+    apt clean
 
-EXPOSE 80 3306
+CMD /usr/bin/touch /var/webmin/miniserv.log && /usr/sbin/service webmin restart && /usr/bin/tail -f /var/webmin/miniserv.log
+
+# Add volumes for the app and MySql
+VOLUME  ["/etc/mysql", "/etc/webmin", "/var/lib/mysql", "/app" ]
+
+EXPOSE 80 10000
 CMD ["/run.sh"]

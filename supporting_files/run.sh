@@ -52,7 +52,7 @@ if [[ ! -d $VOLUME_HOME/mysql ]]; then
     # Try the 'preferred' solution
     mysqld --initialize-insecure > /dev/null 2>&1
 
-    # IF that didn't work
+    # If that didn't work
     if [ $? -ne 0 ]; then
         # Fall back to the 'depreciated' solution
         mysql_install_db > /dev/null 2>&1
