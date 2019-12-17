@@ -32,7 +32,7 @@ RUN add-apt-repository -y ppa:ondrej/php && \
     apt -y autoremove && \
     echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
-# needed for phpMyAdmin
+# Needed for phpMyAdmin
 RUN ln -s /etc/php/7.1/mods-available/mcrypt.ini /etc/php/7.3/mods-available/ && \
     phpenmod mcrypt
 
@@ -84,7 +84,7 @@ RUN a2enmod rewrite
 RUN mkdir -p /app && rm -fr /var/www/html && ln -s /app /var/www/html
 ADD app/ /app
 
-#Environment variables to configure php
+# Environment variables to configure php
 ENV PHP_UPLOAD_MAX_FILESIZE 10M
 ENV PHP_POST_MAX_SIZE 10M
 

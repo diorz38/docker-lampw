@@ -13,13 +13,20 @@ Component | `latest-1804`
 ### On the command line
 ```bash
 # Launch the image with autostart when docker start
-docker run -d --restart unless-stopped -p 8000:80 -p 10000:10000 -v /github/app:/app --name lamp karye/lampw
+docker run -e TZ=Europe/Stockholm -d --restart unless-stopped -p 8000:80 -p 10000:10000 -v /github/app:/app --name lamp karye/lampw
 # View log
 docker logs lamp
 # Attach to console
 docker exec -it lamp bash
 # View running containers
 docker ps -a
+```
+
+## Project layout
+The website in '/app/' is available from `http://localhost:8000`.\
+```
+/ (project root)
+/app/ (your PHP files live here)
 ```
 
 ## Administration
@@ -30,13 +37,6 @@ Login in with user 'root' and password 'pass'.
 ### PHPMyAdmin
 Docker-LAMPW comes pre-installed with phpMyAdmin available from `http://localhost:8000/phpmyadmin`.\
 Login in with user 'admin' and password 'pass'.
-
-## Project layout
-The website in '/app/' is available from `http://localhost:8000`.\
-```
-/ (project root)
-/app/ (your PHP files live here)
-```
 
 ### Volumes
 4 volumes are used for persistent storage: "/etc/mysql", "/etc/webmin", "/var/lib/mysql", "/app".
