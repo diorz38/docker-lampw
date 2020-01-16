@@ -1,5 +1,5 @@
 FROM phusion/baseimage:0.11
-ENV REFRESHED_AT 2019-12-15
+ENV REFRESHED_AT 2020-01-16
 
 # Based on mattrayner/lamp and dgraziotin/lamp
 
@@ -50,7 +50,7 @@ RUN sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/my.cnf && \
     sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysqld.cnf
 
 # Set timezone
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && dpkg-reconfigure -f noninteractive tzdata
+RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && dpkg-reconfigure -f noninteractive tzdata
 
 # Remove pre-installed database
 RUN rm -rf /var/lib/mysql
