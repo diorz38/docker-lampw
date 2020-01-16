@@ -49,9 +49,8 @@ ADD supporting_files/mysqld_innodb.cnf /etc/mysql/conf.d/mysqld_innodb.cnf
 RUN sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/my.cnf && \
     sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysqld.cnf
 
-# Set PHP timezones to Europe/Stockholm
-#RUN sed -i "s/;date.timezone =/date.timezone = Europe\/Stockholm/g" /etc/php/7.3/apache2/php.ini
-#RUN sed -i "s/;date.timezone =/date.timezone = Europe\/Stockholm/g" /etc/php/7.3/cli/php.ini
+# Set timezone
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && dpkg-reconfigure -f noninteractive tzdata
 
 # Remove pre-installed database
 RUN rm -rf /var/lib/mysql
