@@ -1,9 +1,7 @@
 FROM phusion/baseimage:0.11
 ENV REFRESHED_AT 2019-12-15
 
-# Based on mattrayner/lamp and dgraziotin/lamp 
-# MAINTAINER Matthew Rayner <matt@mattrayner.co.uk>
-# MAINTAINER Daniel Graziotin <daniel@ineed.coffee>
+# Based on mattrayner/lamp and dgraziotin/lamp
 
 ENV DOCKER_USER_ID 501 
 ENV DOCKER_USER_GID 20
@@ -28,7 +26,7 @@ RUN add-apt-repository -y ppa:ondrej/php && \
     apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C && \
     apt update && \
     apt -y upgrade && \
-    apt -y install supervisor wget git apache2 php-xdebug libapache2-mod-php mysql-server php-mysql pwgen php-apcu php7.1-mcrypt php-gd php-xml php-mbstring php-gettext zip unzip php-zip curl php-curl && \
+    apt -y install supervisor wget git apache2 php-xdebug libapache2-mod-php mysql-server php-mysql pwgen php-apcu php7.1-mcrypt php-gd php-xml php-mbstring php-gettext zip unzip php-zip curl php-curl tzdata && \
     apt -y autoremove && \
     echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
@@ -52,8 +50,8 @@ RUN sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/my.cnf && \
     sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysqld.cnf
 
 # Set PHP timezones to Europe/Stockholm
-RUN sed -i "s/;date.timezone =/date.timezone = Europe\/Stockholm/g" /etc/php/7.3/apache2/php.ini
-RUN sed -i "s/;date.timezone =/date.timezone = Europe\/Stockholm/g" /etc/php/7.3/cli/php.ini
+#RUN sed -i "s/;date.timezone =/date.timezone = Europe\/Stockholm/g" /etc/php/7.3/apache2/php.ini
+#RUN sed -i "s/;date.timezone =/date.timezone = Europe\/Stockholm/g" /etc/php/7.3/cli/php.ini
 
 # Remove pre-installed database
 RUN rm -rf /var/lib/mysql
