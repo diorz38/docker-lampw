@@ -20,7 +20,7 @@ docker logs lamp
 docker exec -it lamp bash
 # View running containers
 docker ps -a
-# Pull latest image
+# Pull latest image from https://hub.docker.com/repository/docker/karye/lampw
 docker pull karye/lampw
 ```
 
