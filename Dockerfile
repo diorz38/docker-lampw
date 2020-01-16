@@ -11,7 +11,7 @@ ENV BOOT2DOCKER_GID 50
 
 ENV PHPMYADMIN_VERSION=4.9.0.1
 
-ENV TZ Europe/Stockholm
+ENV TZ="Europe/Stockholm"
 
 # Tweaks to give Apache/PHP write permissions to the app
 RUN usermod -u ${BOOT2DOCKER_ID} www-data && \
@@ -32,6 +32,11 @@ RUN add-apt-repository -y ppa:ondrej/php && \
     apt -y autoremove && \
     echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
+# Set timezone
+RUN echo "Setting time zone to '${TZ}'" && \
+    ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && \
+    dpkg-reconfigure -f noninteractive tzdata
+
 # Needed for phpMyAdmin
 RUN ln -s /etc/php/7.1/mods-available/mcrypt.ini /etc/php/7.3/mods-available/ && \
     phpenmod mcrypt
@@ -50,9 +55,6 @@ ADD supporting_files/mysqld_innodb.cnf /etc/mysql/conf.d/mysqld_innodb.cnf
 # Allow mysql to bind on 0.0.0.0
 RUN sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/my.cnf && \
     sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysqld.cnf
-
-# Set timezone
-RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && dpkg-reconfigure -f noninteractive tzdata
 
 # Remove pre-installed database
 RUN rm -rf /var/lib/mysql
