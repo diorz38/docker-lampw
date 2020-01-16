@@ -13,13 +13,15 @@ Component | `latest-1804`
 ### On the command line
 ```bash
 # Launch the image with autostart when docker start
-docker run -e TZ=Europe/Stockholm -d --restart unless-stopped -p 8000:80 -p 10000:10000 -v /github/app:/app --name lamp karye/lampw
+docker run -d --restart unless-stopped -p 8000:80 -p 10000:10000 -v /github/app:/app --name lamp karye/lampw
 # View log
 docker logs lamp
 # Attach to console
 docker exec -it lamp bash
 # View running containers
 docker ps -a
+# Pull latest image
+docker pull karye/lampw
 ```
 
 ## Project layout
@@ -33,6 +35,7 @@ The website in '/app/' is available from `http://localhost:8000`.\
 ### webmin
 Docker-LAMPW comes pre-installed with webmin available from `https://localhost:10000`.\
 Login in with user 'root' and password 'pass'.
+Local timezone is 'Europe/Stockholm'. You may change timezone in webmin.
 
 ### PHPMyAdmin
 Docker-LAMPW comes pre-installed with phpMyAdmin available from `http://localhost:8000/phpmyadmin`.\
