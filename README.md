@@ -6,7 +6,7 @@ Component | `latest-1804`
 [Apache][apache] |`2.4.29`
 [MySQL][mysql] |`5.7.26`
 [PHP][php] | `7.3.6`
-[phpMyAdmin][phpmyadmin] | `4.9.0.1`
+[phpMyAdmin][phpmyadmin] | `4.9.4`
 [Webmin][webmin] | `1.930`
 
 ## Using the image
