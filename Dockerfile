@@ -1,16 +1,12 @@
 FROM phusion/baseimage:0.11
-ENV REFRESHED_AT 2020-01-16
-
+ENV REFRESHED_AT 2020-01-17
 # Based on mattrayner/lamp and dgraziotin/lamp
 
 ENV DOCKER_USER_ID 501 
 ENV DOCKER_USER_GID 20
-
 ENV BOOT2DOCKER_ID 1000
 ENV BOOT2DOCKER_GID 50
-
-ENV PHPMYADMIN_VERSION=4.9.0.1
-
+ENV PHPMYADMIN_VERSION=4.9.4
 ENV TZ="Europe/Stockholm"
 
 # Tweaks to give Apache/PHP write permissions to the app
