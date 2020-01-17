@@ -56,6 +56,11 @@ ADD supporting_files/mysqld_innodb.cnf /etc/mysql/conf.d/mysqld_innodb.cnf
 RUN sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/my.cnf && \
     sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysqld.cnf
 
+# Set MYSQL character set to utf8mb4
+RUN mv /etc/mysql/my.cnf /etc/mysql/my.cnf.bak
+ADD supporting_files/my.cnf my.cnf
+RUN cat my.cnf >> /etc/mysql/my.cnf
+
 # Remove pre-installed database
 RUN rm -rf /var/lib/mysql
 
