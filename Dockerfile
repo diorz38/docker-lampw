@@ -9,7 +9,7 @@ ENV BOOT2DOCKER_GID 50
 ENV PHPMYADMIN_VERSION=4.9.4
 ENV TZ="Europe/Stockholm"
 
-# Tweaks to give Apache/PHP write permissions to the app
+# Tweaks to give Apache/PHP write permissions
 RUN usermod -u ${BOOT2DOCKER_ID} www-data && \
     usermod -G staff www-data && \
     useradd -r mysql && \
@@ -77,10 +77,6 @@ ENV MYSQL_PASS:-$(pwgen -s 12 1)
 ADD supporting_files/apache_default /etc/apache2/sites-available/000-default.conf
 RUN a2enmod rewrite
 
-# Configure /app folder with sample app
-RUN mkdir -p /app && rm -fr /var/www/html && ln -s /app /var/www/html
-ADD app/ /app
-
 # Environment variables to configure php
 ENV PHP_UPLOAD_MAX_FILESIZE 10M
 ENV PHP_POST_MAX_SIZE 10M
@@ -98,8 +94,8 @@ RUN echo "deb http://download.webmin.com/download/repository sarge contrib" >> /
     apt install -y webmin && \
     apt clean
 
-# Add volumes for the app and MySql
-VOLUME  ["/etc/mysql", "/etc/webmin", "/var/lib/mysql", "/app" ]
+# Add volume for the webroot
+VOLUME  ["/var/www"]
 
 EXPOSE 80 10000
 

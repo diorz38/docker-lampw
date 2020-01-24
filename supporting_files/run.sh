@@ -13,10 +13,6 @@ fi
 
 sed -i "s/export APACHE_RUN_GROUP=www-data/export APACHE_RUN_GROUP=staff/" /etc/apache2/envvars
 
-if [ -n "$APACHE_ROOT" ];then
-    rm -f /var/www/html && ln -s "/app/${APACHE_ROOT}" /var/www/html
-fi
-
 sed -i -e "s/cfg\['blowfish_secret'\] = ''/cfg['blowfish_secret'] = '`date | md5sum`'/" /var/www/phpmyadmin/config.inc.php
 
 mkdir -p /var/run/mysqld
@@ -30,9 +26,8 @@ if [ -n "$VAGRANT_OSX_MODE" ];then
     chown -R www-data:staff /var/lib/mysql
     chown -R www-data:staff /var/run/mysqld
 else
-    # Tweaks to give Apache/PHP write permissions to the app
+    # Tweaks to give Apache/PHP write permissions
     chown -R www-data:staff /var/www
-    chown -R www-data:staff /app
     chown -R www-data:staff /var/lib/mysql
     chown -R www-data:staff /var/run/mysqld
     chmod -R 770 /var/lib/mysql

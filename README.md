@@ -4,16 +4,17 @@ Docker-LAMPW is based on mattrayner/lamp (18.04), eg a LAMP stack ([Apache][apac
 Component | `latest-1804`
 ---|---
 [Apache][apache] |`2.4.29`
-[MySQL][mysql] |`5.7.26`
-[PHP][php] | `7.3.6`
+[MySQL][mysql] |`5.7.28`
+[PHP][php] | `7.4.1`
+[Composer][composer] | `1.9.2`
 [phpMyAdmin][phpmyadmin] | `4.9.4`
-[Webmin][webmin] | `1.930`
+[Webmin][webmin] | `1.941`
 
 ## Using the image
 ### On the command line
 ```bash
 # Launch the image with autostart when docker start
-docker run -d --restart unless-stopped -p 8000:80 -p 10000:10000 -v /github/root:/app --name lamp karye/lampw
+docker run -d --restart unless-stopped -p 8080:80 -p 10000:10000 -v /github/root:/var/www --name lamp karye/lampw
 # View log
 docker logs lamp
 # Attach to console
@@ -25,10 +26,10 @@ docker pull karye/lampw
 ```
 
 ## Project layout
-The website in '/app/' is available from `http://localhost:8000`.\
+The website is mapped to '/var/www/' and available from `http://localhost:8080`.\
 ```
 / (project root)
-/app/ (your PHP files live here)
+/var/www/ (your PHP files live here)
 ```
 
 ## Administration
@@ -42,7 +43,7 @@ Docker-LAMPW comes pre-installed with phpMyAdmin available from `http://localhos
 Login in with user 'admin' and password 'pass'.
 
 ### Volumes
-4 volumes are used for persistent storage: "/etc/mysql", "/etc/webmin", "/var/lib/mysql", "/app".
+1 volume is used: "/var/www".
 
 ## License
 Docker-LAMPW is licensed under the [Apache 2.0 License][info-license].
@@ -52,6 +53,7 @@ Docker-LAMPW is licensed under the [Apache 2.0 License][info-license].
 [apache]: http://www.apache.org/
 [mysql]: https://www.mysql.com/
 [php]: http://php.net/
+[composer]: https://getcomposer.org/
 [phpmyadmin]: https://www.phpmyadmin.net/
 [Webmin]: http://www.webmin.com/
 
