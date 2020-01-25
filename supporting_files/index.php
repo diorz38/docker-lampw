@@ -36,11 +36,11 @@
         <section>
             <pre>
             OS: <?php echo php_uname('s'); ?><br>
-            Apache: <?php echo apache_get_version(); ?><br>
-            MySQL version: <?php echo $db->getAttribute( PDO::ATTR_SERVER_VERSION ); ?><br/>
+            Apache version: <?php echo apache_get_version(); ?><br>
+            MySQL version: <?php $b=exec('mysql -V');echo substr($b, 10, 7); ?><br>
             PHP version: <?php echo phpversion(); ?><br>
-            phpMyAdmin version: <?php echo getenv('PHPMYADMIN_VERSION'); ?>
-            Webmin version: 1.390<br>
+            phpMyAdmin version: <?php echo getenv('PHPMYADMIN_VERSION'); ?><br>
+            Webmin version: 1.490<br>
             </pre>
         </section>
     </div>

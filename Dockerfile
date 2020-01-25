@@ -77,9 +77,6 @@ ENV MYSQL_PASS:-$(pwgen -s 12 1)
 ADD supporting_files/apache_default /etc/apache2/sites-available/000-default.conf
 RUN a2enmod rewrite
 
-# Add homepage
-ADD supporting_files/index.php /var/www
-
 # Environment variables to configure php
 ENV PHP_UPLOAD_MAX_FILESIZE 10M
 ENV PHP_POST_MAX_SIZE 10M
@@ -99,6 +96,9 @@ RUN echo "deb http://download.webmin.com/download/repository sarge contrib" >> /
 
 # Add volume for the webroot
 VOLUME  ["/var/www"]
+
+# Add homepage
+ADD supporting_files/index.php /var/www
 
 EXPOSE 80 10000
 
