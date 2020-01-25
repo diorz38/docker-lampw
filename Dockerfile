@@ -78,7 +78,7 @@ ADD supporting_files/apache_default /etc/apache2/sites-available/000-default.con
 RUN a2enmod rewrite
 
 # Add homepage
-ADD index.php /var/www
+ADD supporting_files/index.php /var/www
 
 # Environment variables to configure php
 ENV PHP_UPLOAD_MAX_FILESIZE 10M
