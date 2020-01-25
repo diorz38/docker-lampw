@@ -24,7 +24,7 @@ RUN add-apt-repository -y ppa:ondrej/php && \
     apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C && \
     apt update && \
     apt -y upgrade && \
-    apt -y install supervisor wget git apache2 php-xdebug libapache2-mod-php mysql-server php-mysql pwgen php-apcu php7.1-mcrypt php-gd php-xml php-mbstring php-gettext zip unzip php-zip curl php-curl tzdata && \
+    apt -y install nano supervisor wget git apache2 php-xdebug libapache2-mod-php mysql-server php-mysql pwgen php-apcu php7.1-mcrypt php-gd php-xml php-mbstring php-gettext zip unzip php-zip curl php-curl tzdata && \
     apt -y autoremove && \
     echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
@@ -76,6 +76,9 @@ ENV MYSQL_PASS:-$(pwgen -s 12 1)
 # config to enable .htaccess
 ADD supporting_files/apache_default /etc/apache2/sites-available/000-default.conf
 RUN a2enmod rewrite
+
+# Add homepage
+ADD index.php /var/www
 
 # Environment variables to configure php
 ENV PHP_UPLOAD_MAX_FILESIZE 10M

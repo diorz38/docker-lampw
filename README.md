@@ -42,9 +42,6 @@ Local timezone is 'Europe/Stockholm'. You may change timezone in webmin.
 Docker-LAMPW comes pre-installed with phpMyAdmin available from `http://localhost:8000/phpmyadmin`.\
 Login in with user 'admin' and password 'pass'.
 
-### Volumes
-1 volume is used: "/var/www".
-
 ## License
 Docker-LAMPW is licensed under the [Apache 2.0 License][info-license].
 
