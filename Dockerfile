@@ -61,9 +61,9 @@ RUN chmod 755 /*.sh
 
 # Add phpmyadmin
 RUN wget -O /tmp/phpmyadmin.tar.gz https://files.phpmyadmin.net/phpMyAdmin/${PHPMYADMIN_VERSION}/phpMyAdmin-${PHPMYADMIN_VERSION}-all-languages.tar.gz
-RUN tar xfvz /tmp/phpmyadmin.tar.gz -C /var/www
-RUN ln -s /var/www/phpMyAdmin-${PHPMYADMIN_VERSION}-all-languages /var/www/phpmyadmin
-RUN mv /var/www/phpmyadmin/config.sample.inc.php /var/www/phpmyadmin/config.inc.php
+RUN tar xfvz /tmp/phpmyadmin.tar.gz -C /var
+RUN ln -s /var/phpMyAdmin-${PHPMYADMIN_VERSION}-all-languages /var/phpmyadmin
+RUN mv /var/phpmyadmin/config.sample.inc.php /var/phpmyadmin/config.inc.php
 
 # Add composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
