@@ -27,7 +27,7 @@ if [ -n "$VAGRANT_OSX_MODE" ];then
     chown -R www-data:staff /var/run/mysqld
 else
     # Tweaks to give Apache/PHP write permissions
-    chown -R www-data:staff /var/www
+#   chown -R www-data:staff /var/www
     chown -R www-data:staff /var/phpmyadmin
     chown -R www-data:staff /var/lib/mysql
     chown -R www-data:staff /var/run/mysqld

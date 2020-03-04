@@ -13,8 +13,10 @@ Component | `latest-1804`
 ## Using the image
 ### On the command line
 ```bash
-# Launch the image with autostart when docker start
-docker run -d --restart unless-stopped -p 8080:80 -p 10000:10000 -v /github/root:/var/www --name lamp karye/lampw
+# Launch the image with autostart when docker start, linux host:
+docker run -d --restart unless-stopped -p 8080:80 -p 10000:10000 -v /github/root:/var/www -v /github/root/mysql:/var/lib/mysql --name lamp karye/lampw
+# Launch the image with autostart when docker start, windows host:
+docker run -d --restart unless-stopped -p 8080:80 -p 10000:10000 -v "c:\github\root":/var/www -v "c:\github\mysql":/var/lib/mysql --name lamp karye/lampw
 # View log
 docker logs lamp
 # Attach to console
