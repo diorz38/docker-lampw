@@ -4,7 +4,7 @@ Docker-LAMPW is based on mattrayner/lamp (18.04), eg a LAMP stack ([Apache][apac
 Component | `latest-1804`
 ---|---
 [Apache][apache] |`2.4.29`
-[MySQL][mysql] |`5.7.28`
+[MySQL][mysql] |`5.7.30`
 [PHP][php] | `7.4.1`
 [Composer][composer] | `1.9.2`
 [phpMyAdmin][phpmyadmin] | `4.9.5`
@@ -17,12 +17,19 @@ Component | `latest-1804`
 docker run -d --restart unless-stopped -p 8080:80 -p 10000:10000 -v /github/root:/var/www -v /github/root/mysql:/var/lib/mysql --name lamp karye/lampw
 # Launch the image with autostart when docker start, windows host:
 docker run -d --restart unless-stopped -p 8080:80 -p 10000:10000 -v "c:\github\root":/var/www -v "c:\github\mysql":/var/lib/mysql --name lamp karye/lampw
+
 # View log
 docker logs lamp
+
 # Attach to console
 docker exec -it lamp bash
+
 # View running containers
 docker ps -a
+
+# Updating to latest image
+docker stop karye/lampw
+docker rm karye/lampw
 # Pull latest image from https://hub.docker.com/repository/docker/karye/lampw
 docker pull karye/lampw
 ```
