@@ -10,9 +10,9 @@ ENV PHPMYADMIN_VERSION=4.9.5
 ENV TZ="Europe/Stockholm"
 
 # Set timezone
-RUN echo "Setting time zone to '${TZ}'" && \
-    ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && \
-    dpkg-reconfigure -f noninteractive tzdata
+RUN echo "Setting time zone to '${TZ}'"
+#RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && \
+#    dpkg-reconfigure -f noninteractive tzdata
 
 # Tweaks to give Apache/PHP write permissions
 RUN echo "Creating user and groups: www-data, mysql"
@@ -31,6 +31,9 @@ RUN add-apt-repository -y ppa:ondrej/php && \
     apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C && \
     apt update && \
     apt -y upgrade && \
+    echo debconf debconf/frontend select Noninteractive | debconf-set-selections && \
+    echo tzdata tzdata/Areas select Europe | debconf-set-selections && \
+    echo tzdata tzdata/Zones/Europe select Stockholm | debconf-set-selections && \
     apt -y install nano supervisor wget git apache2 php-xdebug libapache2-mod-php mysql-server php-mysql pwgen php-apcu php7.1-mcrypt php-gd php-xml php-mbstring php-gettext zip unzip php-zip curl php-curl && \
     apt -y autoremove && \
     echo "ServerName localhost" >> /etc/apache2/apache2.conf
@@ -91,10 +94,10 @@ ENV PHP_POST_MAX_SIZE 10M
 RUN echo "Installing webmin"
 RUN echo root:pass | chpasswd && \
     echo "Acquire::GzipIndexes \"false\"; Acquire::CompressionTypes::Order:: \"gz\";" >/etc/apt/apt.conf.d/docker-gzip-indexes && \
-	apt update && \
-	apt install -y
+    apt update && \
+    apt install -y
 RUN wget http://www.webmin.com/jcameron-key.asc && \
-	apt-key add jcameron-key.asc
+    apt-key add jcameron-key.asc
 RUN echo "deb http://download.webmin.com/download/repository sarge contrib" >> /etc/apt/sources.list && \
     echo "deb http://webmin.mirror.somersettechsolutions.co.uk/repository sarge contrib" >> /etc/apt/sources.list && \
     apt update && \

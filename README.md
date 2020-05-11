@@ -7,7 +7,7 @@ Component | `latest-1804`
 [MySQL][mysql] |`5.7.28`
 [PHP][php] | `7.4.1`
 [Composer][composer] | `1.9.2`
-[phpMyAdmin][phpmyadmin] | `4.9.4`
+[phpMyAdmin][phpmyadmin] | `4.9.5`
 [Webmin][webmin] | `1.941`
 
 ## Using the image
