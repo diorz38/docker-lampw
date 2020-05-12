@@ -54,24 +54,21 @@ docker pull karye/lampw
 ```
 
 ## Project layout
-The website `http://localhost:8080` is mapped to '/var/www/' in the docker container.\
+The website `http://localhost:8080` is mapped to '/var/www/' in the docker container.
 ```
 / (project root)
-/var/www/ (your files live here)
+/var/www/ (your folders and files live here)
 ```
 
 ## Administration
 ### webmin
-Docker-LAMPW comes pre-installed with webmin available from `https://localhost:10000`.\
+Docker-LAMPW comes pre-installed with Webmin available from `https://localhost:10000`.\
 Login in with user **root** and password **pass**.\
-Local timezone is 'Europe/Stockholm'. You may change timezone in webmin.
+Local timezone is 'Europe/Stockholm'. You may change timezone in Webmin.
 
 ### PHPMyAdmin
 Docker-LAMPW comes pre-installed with phpMyAdmin available from `http://localhost:8000/phpmyadmin`.\
 Login in with user **admin** and password **pass**.
-
-## Homepage with version
-Check out `http://localhost:8080/local`.
 
 ## License
 Docker-LAMPW is licensed under the [Apache 2.0 License][info-license].
