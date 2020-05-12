@@ -11,14 +11,33 @@ Component | `latest-1804`
 [Webmin][webmin] | `1.941`
 
 ## Using the image
-### On the command line
+### Launching in Linux
 ```bash
-# Launch the image with autostart when docker start, linux host:
-docker run -d --restart unless-stopped -p 8080:80 -p 10000:10000 -v /github/root:/var/www -v /github/root/mysql:/var/lib/mysql --name lamp karye/lampw
-# Launch the image with autostart when docker start, windows host:
-docker run -d --restart unless-stopped -p 8080:80 -p 10000:10000 -v "c:\github\root":/var/www -v "c:\github\mysql":/var/lib/mysql --name lamp karye/lampw
+# For datapersistens two volumes are used:
+# /var/www i mapped to /home/user/github
+# /var/lib/mysql is mapped to /home/user/github/mysql-backup
+# Launch the image with autostart when docker start
+docker run --restart unless-stopped -d -p 8080:80 -p 10000:10000 \
+-v /home/user/github:/var/www \
+-v /home/user/github/mysql-backup:/var/lib/mysql \
+--name lamp karye/lampw
+```
 
-# View log
+### Launching in Windows
+```powershell
+# For datapersistens two volumes are used:
+# /var/www i mapped to C:\github
+# /var/lib/mysql is mapped to C:\github\mysql-backup
+# Launch the image with autostart when docker start
+docker run -d --restart unless-stopped -p 8080:80 -p 10000:10000 `
+-v "C:\github:/var/www" `
+-v "C:\github\mysql-backup:/var/lib/mysql" `
+--name lamp karye/lampw
+```
+
+## Useful Docker commands
+```shell
+# View logg
 docker logs lamp
 
 # Attach to console
@@ -35,21 +54,21 @@ docker pull karye/lampw
 ```
 
 ## Project layout
-The website is mapped to '/var/www/' and available from `http://localhost:8080`.\
+The website `http://localhost:8080` is mapped to '/var/www/' in the docker container.\
 ```
 / (project root)
-/var/www/ (your PHP files live here)
+/var/www/ (your files live here)
 ```
 
 ## Administration
 ### webmin
 Docker-LAMPW comes pre-installed with webmin available from `https://localhost:10000`.\
-Login in with user 'root' and password 'pass'.\
+Login in with user **root** and password **pass**.\
 Local timezone is 'Europe/Stockholm'. You may change timezone in webmin.
 
 ### PHPMyAdmin
 Docker-LAMPW comes pre-installed with phpMyAdmin available from `http://localhost:8000/phpmyadmin`.\
-Login in with user 'admin' and password 'pass'.
+Login in with user **admin** and password **pass**.
 
 ## Homepage with version
 Check out `http://localhost:8080/local`.
