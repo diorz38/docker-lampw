@@ -23,28 +23,25 @@ RUN groupmod -g $(($BOOT2DOCKER_GID + 10000)) $(getent group $BOOT2DOCKER_GID | 
 RUN groupmod -g ${BOOT2DOCKER_GID} staff
 
 ENV DEBIAN_FRONTEND noninteractive
-#RUN apt update && apt -y upgrade && apt install software-properties-common
-#RUN add-apt-repository -y ppa:ondrej/php && \
-#    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C
 
 # Upgrade to latest packages
 RUN apt update && apt -y upgrade
 
 # Set environment variables
-RUN echo debconf debconf/frontend select Noninteractive | debconf-set-selections && \
-    echo tzdata tzdata/Areas select ${TZ_AREA} | debconf-set-selections && \
-    echo tzdata tzdata/Zones/Europe select ${TZ_CITY} | debconf-set-selections
+RUN echo debconf debconf/frontend select Noninteractive | debconf-set-selections
+RUN echo tzdata tzdata/Areas select ${TZ_AREA} | debconf-set-selections
+RUN echo tzdata tzdata/Zones/Europe select ${TZ_CITY} | debconf-set-selections
 
 # Install packages
-RUN apt -y install nano supervisor wget git apache2 php-xdebug libapache2-mod-php && \
-    php-mysql pwgen php-apcu php7.1-mcrypt php-gd php-xml php-mbstring && \
+RUN apt -y install nano supervisor wget git apache2 php-xdebug libapache2-mod-php \
+    php-mysql pwgen php-apcu php7.1-mcrypt php-gd php-xml php-mbstring \
     php-gettext zip unzip php-zip curl php-curl mysql-server
 
 RUN apt -y autoremove && \
     echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 # Needed for phpMyAdmin
-RUN ln -s /etc/php/7.1/mods-available/mcrypt.ini /etc/php/7.3/mods-available/ && \
+RUN ln -s /etc/php/7.1/mods-available/mcrypt.ini /etc/php/7.3/mods-available/ \
     phpenmod mcrypt
 
 # Add image configuration and scripts
