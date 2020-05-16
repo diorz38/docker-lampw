@@ -22,11 +22,12 @@ RUN usermod -u ${BOOT2DOCKER_ID} www-data && \
 RUN groupmod -g $(($BOOT2DOCKER_GID + 10000)) $(getent group $BOOT2DOCKER_GID | cut -d: -f1)
 RUN groupmod -g ${BOOT2DOCKER_GID} staff
 
-# Add repository for PHP-7.4+
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt update && apt -y upgrade && apt install software-properties-common
-RUN add-apt-repository -y ppa:ondrej/php && \
-    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C
+#RUN apt update && apt -y upgrade && apt install software-properties-common
+#RUN add-apt-repository -y ppa:ondrej/php && \
+#    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C
+
+# Upgrade to latest packages
 RUN apt update && apt -y upgrade
 
 # Set environment variables
