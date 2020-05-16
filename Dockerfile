@@ -43,8 +43,8 @@ RUN apt -y autoremove && \
     echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 # Needed for phpMyAdmin
-RUN ln -s /etc/php/7.1/mods-available/mcrypt.ini /etc/php/7.3/mods-available/ \
-    phpenmod mcrypt
+RUN ln -s /etc/php/7.1/mods-available/mcrypt.ini /etc/php/7.3/mods-available/
+RUN phpenmod mcrypt
 
 # Add image configuration and scripts
 COPY supporting_files/run.sh /run.sh
