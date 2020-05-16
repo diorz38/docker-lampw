@@ -1,5 +1,5 @@
-#FROM phusion/baseimage:0.11
-FROM ubuntu:18.04
+FROM phusion/baseimage:0.11
+
 ENV REFRESHED_AT 2020-05-16
 # Based on mattrayner/lamp and dgraziotin/lamp
 # Inspired on fauria/lamp
@@ -23,6 +23,8 @@ RUN groupmod -g $(($BOOT2DOCKER_GID + 10000)) $(getent group $BOOT2DOCKER_GID | 
 RUN groupmod -g ${BOOT2DOCKER_GID} staff
 
 ENV DEBIAN_FRONTEND noninteractive
+RUN add-apt-repository -y ppa:ondrej/php && \
+    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C
 
 # Upgrade to latest packages
 RUN apt update && apt -y upgrade
