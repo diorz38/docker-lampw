@@ -2,6 +2,7 @@
 FROM ubuntu:18.04
 ENV REFRESHED_AT 2020-05-16
 # Based on mattrayner/lamp and dgraziotin/lamp
+# Inspired on fauria/lamp
 # Based on https://github.com/783872453/docker-ubuntu-unattended-upgrades
 
 ENV DOCKER_USER_ID 501 
@@ -23,8 +24,8 @@ RUN groupmod -g ${BOOT2DOCKER_GID} staff
 
 # Add repository for PHP-7.4+
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt install software-properties-common && \
-    add-apt-repository -y ppa:ondrej/php && \
+RUN apt update && apt -y upgrade && apt install software-properties-common
+RUN add-apt-repository -y ppa:ondrej/php && \
     apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C
 RUN apt update && apt -y upgrade
 
@@ -46,9 +47,6 @@ RUN ln -s /etc/php/7.1/mods-available/mcrypt.ini /etc/php/7.3/mods-available/ &&
     phpenmod mcrypt
 
 # Add image configuration and scripts
-#COPY supporting_files/start-apache2.sh /start-apache2.sh
-#COPY supporting_files/start-mysqld.sh /start-mysqld.sh
-#COPY supporting_files/start-webmin.sh /start-webmin.sh
 COPY supporting_files/run.sh /run.sh
 RUN  chmod 755 /*.sh
 COPY supporting_files/supervisord-apache2.conf /etc/supervisor/conf.d/supervisord-apache2.conf
