@@ -35,7 +35,7 @@ else
     chmod -R 770 /var/run/mysqld
 fi
 
-rm /var/run/mysqld/mysqld.sock
+rm /var/run/mysqld/mysqld.sock*
 
 sed -i "s/bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/my.cnf
 sed -i "s/user.*/user = www-data/" /etc/mysql/my.cnf

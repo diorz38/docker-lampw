@@ -1,3 +1,2 @@
 #!/bin/bash
-rm /var/run/mysqld/mysqld.sock.lock
-exec mysqld_safe
+exec /usr/bin/mysqld_safe
