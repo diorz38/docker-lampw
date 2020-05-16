@@ -12,10 +12,6 @@ ENV PHPMYADMIN_VERSION=4.9.5
 ENV TZ_AREA="Europe"
 ENV TZ_CITY="Stockholm"
 
-# Set timezone
-#RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && \
-#    dpkg-reconfigure -f noninteractive tzdata
-
 # Tweaks to give Apache/PHP write permissions
 RUN usermod -u ${BOOT2DOCKER_ID} www-data && \
     usermod -G staff www-data && \
@@ -25,17 +21,24 @@ RUN usermod -u ${BOOT2DOCKER_ID} www-data && \
 RUN groupmod -g $(($BOOT2DOCKER_GID + 10000)) $(getent group $BOOT2DOCKER_GID | cut -d: -f1)
 RUN groupmod -g ${BOOT2DOCKER_GID} staff
 
-# Install packages
+# Add repository for PHP-7.4+
 ENV DEBIAN_FRONTEND noninteractive
-RUN add-apt-repository -y ppa:ondrej/php && \
-    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C && \
-    apt update && \
-    apt -y upgrade && \
-    echo debconf debconf/frontend select Noninteractive | debconf-set-selections && \
+RUN apt install software-properties-common && \
+    add-apt-repository -y ppa:ondrej/php && \
+    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C
+RUN apt update && apt -y upgrade
+
+# Set environment variables
+RUN echo debconf debconf/frontend select Noninteractive | debconf-set-selections && \
     echo tzdata tzdata/Areas select ${TZ_AREA} | debconf-set-selections && \
-    echo tzdata tzdata/Zones/Europe select ${TZ_CITY} | debconf-set-selections && \
-    apt -y install nano supervisor wget git apache2 php-xdebug libapache2-mod-php mysql-server php-mysql pwgen php-apcu php7.1-mcrypt php-gd php-xml php-mbstring php-gettext zip unzip php-zip curl php-curl && \
-    apt -y autoremove && \
+    echo tzdata tzdata/Zones/Europe select ${TZ_CITY} | debconf-set-selections
+
+# Install packages
+RUN apt -y install nano supervisor wget git apache2 php-xdebug libapache2-mod-php && \
+    php-mysql pwgen php-apcu php7.1-mcrypt php-gd php-xml php-mbstring && \
+    php-gettext zip unzip php-zip curl php-curl mysql-server
+
+RUN apt -y autoremove && \
     echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 # Needed for phpMyAdmin

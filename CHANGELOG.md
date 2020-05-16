@@ -4,3 +4,7 @@ Initial release - LAMP + webmin
 Fixed timezone
 Added mysql data persistens
 Updated to latest phpMyadmin
+# 0.3.0
+Fixed system timezone in mysqld logs
+Changing to ubuntu 18.04 base image
+Removing start-script for apache2, mysql, webmin
