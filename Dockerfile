@@ -1,5 +1,6 @@
-FROM phusion/baseimage:0.11
-ENV REFRESHED_AT 2020-05-11
+#FROM phusion/baseimage:0.11
+FROM ubuntu:18.04
+ENV REFRESHED_AT 2020-05-16
 # Based on mattrayner/lamp and dgraziotin/lamp
 # Based on https://github.com/783872453/docker-ubuntu-unattended-upgrades
 
@@ -42,9 +43,9 @@ RUN ln -s /etc/php/7.1/mods-available/mcrypt.ini /etc/php/7.3/mods-available/ &&
     phpenmod mcrypt
 
 # Add image configuration and scripts
-COPY supporting_files/start-apache2.sh /start-apache2.sh
-COPY supporting_files/start-mysqld.sh /start-mysqld.sh
-COPY supporting_files/start-webmin.sh /start-webmin.sh
+#COPY supporting_files/start-apache2.sh /start-apache2.sh
+#COPY supporting_files/start-mysqld.sh /start-mysqld.sh
+#COPY supporting_files/start-webmin.sh /start-webmin.sh
 COPY supporting_files/run.sh /run.sh
 RUN  chmod 755 /*.sh
 COPY supporting_files/supervisord-apache2.conf /etc/supervisor/conf.d/supervisord-apache2.conf
