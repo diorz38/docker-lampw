@@ -38,6 +38,7 @@ fi
 rm /var/run/mysqld/mysqld.sock*
 
 sed -i "s/bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/my.cnf
+sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mariadb.conf.d/50-server.cnf
 sed -i "s/user.*/user = www-data/" /etc/mysql/my.cnf
 
 if [[ ! -d $VOLUME_HOME/mysql ]]; then

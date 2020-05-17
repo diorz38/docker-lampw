@@ -34,13 +34,16 @@ RUN echo tzdata tzdata/Zones/Europe select ${TZ_CITY} | debconf-set-selections
 # Install packages
 RUN apt -y install nano supervisor wget git apache2 php php-xdebug pwgen php-apcu \
     php-gd php-xml php-mbstring php-gettext zip unzip php-zip curl php-curl pwgen php-apcu \
-    libapache2-mod-php php-mysql mariadb-server
+    php-mcrypt libapache2-mod-php php-mysql mariadb-server
+
+# Needed for phpMyAdmin
+RUN phpenmod mcrypt
 
 RUN apt -y autoremove && \
     echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 # Add image configuration and scripts
-COPY supporting_files/run-copy.sh /run.sh
+COPY supporting_files/run.sh /run.sh
 COPY supporting_files/supervisord-apache2.conf /etc/supervisor/conf.d/supervisord-apache2.conf
 COPY supporting_files/supervisord-mysqld.conf /etc/supervisor/conf.d/supervisord-mysqld.conf
 COPY supporting_files/mysqld_innodb.cnf /etc/mysql/conf.d/mysqld_innodb.cnf
@@ -49,9 +52,11 @@ COPY supporting_files/mysqld_innodb.cnf /etc/mysql/conf.d/mysqld_innodb.cnf
 COPY supporting_files/create_mysql_users.sh /create_mysql_users.sh
 RUN chmod 755 /*.sh
 
-# Allow mysql to bind on 0.0.0.0
-RUN sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/my.cnf && \
-    sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mariadb.conf.d/50-server.cnf
+# Add phpmyadmin
+RUN wget -O /tmp/phpmyadmin.tar.gz https://files.phpmyadmin.net/phpMyAdmin/${PHPMYADMIN_VERSION}/phpMyAdmin-${PHPMYADMIN_VERSION}-all-languages.tar.gz
+RUN tar xfvz /tmp/phpmyadmin.tar.gz -C /var
+RUN mv /var/phpMyAdmin-${PHPMYADMIN_VERSION}-all-languages /var/phpmyadmin
+RUN mv /var/phpmyadmin/config.sample.inc.php /var/phpmyadmin/config.inc.php
 
 # config to enable .htaccess
 COPY supporting_files/apache_default /etc/apache2/sites-available/000-default.conf
