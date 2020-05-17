@@ -32,12 +32,13 @@ RUN echo tzdata tzdata/Areas select ${TZ_AREA} | debconf-set-selections
 RUN echo tzdata tzdata/Zones/Europe select ${TZ_CITY} | debconf-set-selections
 
 # Install packages
-RUN apt -y install nano supervisor wget git apache2 php php-xdebug pwgen php-apcu \
-    php-gd php-xml php-mbstring php-gettext zip unzip php-zip curl php-curl pwgen php-apcu \
-    php-mcrypt libapache2-mod-php php-mysql mariadb-server
+RUN apt -y install nano supervisor wget git apache2 php php-xdebug pwgen \
+    php-apcu php-gd php-xml php-mbstring php-gettext zip unzip php-zip curl \
+    php-curl pwgen php-apcu libapache2-mod-php php-mysql mariadb-server \
+    composer
 
 # Needed for phpMyAdmin
-RUN phpenmod mcrypt
+RUN phpenmod mbstring
 
 RUN apt -y autoremove && \
     echo "ServerName localhost" >> /etc/apache2/apache2.conf
