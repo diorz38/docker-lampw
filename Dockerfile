@@ -32,7 +32,7 @@ RUN echo tzdata tzdata/Areas select ${TZ_AREA} | debconf-set-selections
 RUN echo tzdata tzdata/Zones/Europe select ${TZ_CITY} | debconf-set-selections
 
 # Install packages
-RUN apt -y install nano supervisor wget git apache2 php
+RUN apt -y install nano supervisor wget git apache2 php php-xdebug pwgen php-apcu php-gd php-xml php-mbstring php-gettext zip unzip php-zip curl php-curl pwgen php-apcu libapache2-mod-php php-mysql mariadb-server
 
 RUN apt -y autoremove && \
     echo "ServerName localhost" >> /etc/apache2/apache2.conf
@@ -42,23 +42,22 @@ RUN apt -y autoremove && \
 #RUN phpenmod mcrypt
 
 # Add image configuration and scripts
-COPY supporting_files/run-copy.sh /run.sh
-#RUN  chmod 755 /*.sh
+COPY supporting_files/run.sh /run.sh
 COPY supporting_files/supervisord-apache2.conf /etc/supervisor/conf.d/supervisord-apache2.conf
-#COPY supporting_files/supervisord-mysqld.conf /etc/supervisor/conf.d/supervisord-mysqld.conf
+COPY supporting_files/supervisord-mysqld.conf /etc/supervisor/conf.d/supervisord-mysqld.conf
 #COPY supporting_files/supervisord-webmin.conf /etc/supervisor/conf.d/supervisord-webmin.conf
-#COPY supporting_files/mysqld_innodb.cnf /etc/mysql/conf.d/mysqld_innodb.cnf
-
-# Allow mysql to bind on 0.0.0.0
-#RUN sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/my.cnf && \
-#    sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysqld.cnf
-
-# Remove pre-installed database
-#RUN rm -rf /var/lib/mysql
+COPY supporting_files/mysqld_innodb.cnf /etc/mysql/conf.d/mysqld_innodb.cnf
 
 # Add MySQL utils
-#COPY supporting_files/create_mysql_users.sh /create_mysql_users.sh
-#RUN chmod 755 /*.sh
+COPY supporting_files/create_mysql_users.sh /create_mysql_users.sh
+RUN chmod 755 /*.sh
+
+# Allow mysql to bind on 0.0.0.0
+RUN sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/my.cnf && \
+    sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysqld.cnf
+
+# Remove pre-installed database
+RUN rm -rf /var/lib/mysql
 
 # Add phpmyadmin
 #RUN wget -O /tmp/phpmyadmin.tar.gz https://files.phpmyadmin.net/phpMyAdmin/${PHPMYADMIN_VERSION}/phpMyAdmin-${PHPMYADMIN_VERSION}-all-languages.tar.gz
