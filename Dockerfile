@@ -42,7 +42,7 @@ RUN apt -y autoremove && \
 #RUN phpenmod mcrypt
 
 # Add image configuration and scripts
-#COPY supporting_files/run.sh /run.sh
+COPY supporting_files/run-copy.sh /run.sh
 #RUN  chmod 755 /*.sh
 COPY supporting_files/supervisord-apache2.conf /etc/supervisor/conf.d/supervisord-apache2.conf
 #COPY supporting_files/supervisord-mysqld.conf /etc/supervisor/conf.d/supervisord-mysqld.conf
@@ -103,4 +103,4 @@ COPY supporting_files/index.php /var/www
 
 EXPOSE 80 10000
 
-CMD ["/run-copy.sh"]
+CMD ["/run.sh"]
