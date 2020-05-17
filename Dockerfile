@@ -42,7 +42,7 @@ RUN apt -y autoremove && \
 #RUN phpenmod mcrypt
 
 # Add image configuration and scripts
-COPY supporting_files/run.sh /run.sh
+COPY supporting_files/run-copy.sh /run.sh
 COPY supporting_files/supervisord-apache2.conf /etc/supervisor/conf.d/supervisord-apache2.conf
 COPY supporting_files/supervisord-mysqld.conf /etc/supervisor/conf.d/supervisord-mysqld.conf
 #COPY supporting_files/supervisord-webmin.conf /etc/supervisor/conf.d/supervisord-webmin.conf
