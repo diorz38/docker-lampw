@@ -45,12 +45,9 @@ RUN apt -y autoremove && \
 
 # Add image configuration and scripts
 COPY supporting_files/run.sh /run.sh
+RUN chmod 755 /*.sh
 COPY supporting_files/supervisord-apache2.conf /etc/supervisor/conf.d/supervisord-apache2.conf
 COPY supporting_files/supervisord-mysqld.conf /etc/supervisor/conf.d/supervisord-mysqld.conf
-
-# Add MySQL utils
-COPY supporting_files/create_mysql_users.sh /create_mysql_users.sh
-RUN chmod 755 /*.sh
 
 # config to enable .htaccess
 COPY supporting_files/apache_default /etc/apache2/sites-available/000-default.conf
@@ -70,7 +67,8 @@ RUN mv /var/phpmyadmin/config.sample.inc.php /var/phpmyadmin/config.inc.php
 VOLUME  ["/var/www"]
 
 # Add homepage
-COPY supporting_files/index.php /var/www
+RUN mkdir /var/lamp
+COPY supporting_files/index.php /var/lamp
 
 EXPOSE 80 10000
 

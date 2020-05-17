@@ -16,6 +16,13 @@
                 Require all granted
         </Directory>
 
+        Alias /lampw /var/lamp
+        <Directory /var/lamp>
+                Options Indexes FollowSymLinks MultiViews
+                AllowOverride All
+                Require all granted
+        </Directory>
+
         ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
         <Directory "/usr/lib/cgi-bin">
                 AllowOverride None

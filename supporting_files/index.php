@@ -37,10 +37,11 @@
             <pre>
             OS: <?php echo php_uname('s'); ?><br>
             Apache version: <?php echo apache_get_version(); ?><br>
-            MySQL version: <?php $b=exec('mysql -V');echo substr($b, 10, 7); ?><br>
+            MariaDB version: <?php $b=exec('mysql -V');echo substr($b, 10, 7); ?><br>
             PHP version: <?php echo phpversion(); ?><br>
             phpMyAdmin version: <?php echo getenv('PHPMYADMIN_VERSION'); ?><br>
             Webmin version: 1.490<br>
+            Timezone: <?php echo getenv('TZ_AREA') . "/" . getenv('TZ_CITY'); ?><br>
             </pre>
         </section>
     </div>
