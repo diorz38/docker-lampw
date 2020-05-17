@@ -47,7 +47,7 @@ RUN apt -y autoremove && \
 COPY supporting_files/run.sh /run.sh
 COPY supporting_files/supervisord-apache2.conf /etc/supervisor/conf.d/supervisord-apache2.conf
 COPY supporting_files/supervisord-mysqld.conf /etc/supervisor/conf.d/supervisord-mysqld.conf
-COPY supporting_files/mysqld_innodb.cnf /etc/mysql/conf.d/mysqld_innodb.cnf
+#COPY supporting_files/mysqld_innodb.cnf /etc/mysql/mariadb.conf.d/mysqld_innodb.cnf
 
 # Add MySQL utils
 COPY supporting_files/create_mysql_users.sh /create_mysql_users.sh
