@@ -2,6 +2,7 @@
 
 VOLUME_HOME="/var/lib/mysql"
 
+echo "=> Setting PHP filesizes"
 if [ -e /etc/php/5.6/apache2/php.ini ]
 then
     sed -ri -e "s/^upload_max_filesize.*/upload_max_filesize = ${PHP_UPLOAD_MAX_FILESIZE}/" \
@@ -15,8 +16,10 @@ sed -i "s/export APACHE_RUN_GROUP=www-data/export APACHE_RUN_GROUP=staff/" /etc/
 
 sed -i -e "s/cfg\['blowfish_secret'\] = ''/cfg['blowfish_secret'] = '`date | md5sum`'/" /var/phpmyadmin/config.inc.php
 
-mkdir -p /var/run/mysqld
 
+#mkdir -p /var/run/mysqld
+
+echo "=> Setting directories permissions and owners"
 if [ -n "$VAGRANT_OSX_MODE" ];then
     usermod -u $DOCKER_USER_ID www-data
     groupmod -g $(($DOCKER_USER_GID + 10000)) $(getent group $DOCKER_USER_GID | cut -d: -f1)
@@ -41,25 +44,35 @@ sed -i "s/bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/my.cnf
 sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mariadb.conf.d/50-server.cnf
 sed -i "s/user.*/user = www-data/" /etc/mysql/my.cnf
 
-if [[ ! -d $VOLUME_HOME/mysql ]]; then
-    echo "=> An empty or uninitialized MySQL volume is detected in $VOLUME_HOME"
-    echo "=> Installing MySQL ..."
-
-    # Try the 'preferred' solution
-    mysqld --initialize-insecure > /dev/null 2>&1
-
-    # If that didn't work
-    if [ $? -ne 0 ]; then
-        # Fall back to the 'depreciated' solution
-        mysql_install_db > /dev/null 2>&1
-    fi
-
-    echo "=> Done!"  
-    /create_mysql_users.sh
-else
-    echo "=> Using an existing volume of MySQL"
-fi
-
 /usr/bin/touch /var/webmin/miniserv.log
+
+/usr/bin/mysqld_safe > /dev/null 2>&1 &
+
+RET=1
+while [[ RET -ne 0 ]]; do
+    echo "=> Waiting for confirmation of MySQL service startup"
+    sleep 5
+    mysql -uroot -e "status" > /dev/null 2>&1
+    RET=$?
+done
+
+_user="admin"
+_word="pass"
+echo "=> Creating MySQL admin user with ${_word} password"
+
+mysql -uroot -e "GRANT ALL ON *.* TO '${_user}'@'localhost' IDENTIFIED BY '${_word}' WITH GRANT OPTION"
+mysql -uroot -e "FLUSH PRIVILEGES"
+
+echo "========================================================================"
+echo "You can now connect to this MySQL Server with $PASS"
+echo ""
+echo "    mysql -uadmin -p$PASS -h<host> -P<port>"
+echo ""
+echo "Please remember to change the above password as soon as possible!"
+echo "MySQL user 'root' has no password but only allows local connections"
+echo ""
+
+mysqladmin -uroot shutdown
+echo "=> Shutting down MySQL"
 
 exec supervisord -n

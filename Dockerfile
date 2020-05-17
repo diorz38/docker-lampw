@@ -47,17 +47,10 @@ RUN apt -y autoremove && \
 COPY supporting_files/run.sh /run.sh
 COPY supporting_files/supervisord-apache2.conf /etc/supervisor/conf.d/supervisord-apache2.conf
 COPY supporting_files/supervisord-mysqld.conf /etc/supervisor/conf.d/supervisord-mysqld.conf
-#COPY supporting_files/mysqld_innodb.cnf /etc/mysql/mariadb.conf.d/mysqld_innodb.cnf
 
 # Add MySQL utils
 COPY supporting_files/create_mysql_users.sh /create_mysql_users.sh
 RUN chmod 755 /*.sh
-
-# Add phpmyadmin
-RUN wget -O /tmp/phpmyadmin.tar.gz https://files.phpmyadmin.net/phpMyAdmin/${PHPMYADMIN_VERSION}/phpMyAdmin-${PHPMYADMIN_VERSION}-all-languages.tar.gz
-RUN tar xfvz /tmp/phpmyadmin.tar.gz -C /var
-RUN mv /var/phpMyAdmin-${PHPMYADMIN_VERSION}-all-languages /var/phpmyadmin
-RUN mv /var/phpmyadmin/config.sample.inc.php /var/phpmyadmin/config.inc.php
 
 # config to enable .htaccess
 COPY supporting_files/apache_default /etc/apache2/sites-available/000-default.conf
@@ -66,6 +59,12 @@ RUN a2enmod rewrite
 # Environment variables to configure php
 ENV PHP_UPLOAD_MAX_FILESIZE 10M
 ENV PHP_POST_MAX_SIZE 10M
+
+# Add phpmyadmin
+RUN wget -O /tmp/phpmyadmin.tar.gz https://files.phpmyadmin.net/phpMyAdmin/${PHPMYADMIN_VERSION}/phpMyAdmin-${PHPMYADMIN_VERSION}-all-languages.tar.gz
+RUN tar xfvz /tmp/phpmyadmin.tar.gz -C /var
+RUN mv /var/phpMyAdmin-${PHPMYADMIN_VERSION}-all-languages /var/phpmyadmin
+RUN mv /var/phpmyadmin/config.sample.inc.php /var/phpmyadmin/config.inc.php
 
 # Add volume for the webroot
 VOLUME  ["/var/www"]
