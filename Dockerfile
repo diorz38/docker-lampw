@@ -67,9 +67,8 @@ RUN mv /var/phpmyadmin/config.sample.inc.php /var/phpmyadmin/config.inc.php
 # Add webmin
 RUN echo root:pass | chpasswd
 RUN echo "Acquire::GzipIndexes \"false\"; Acquire::CompressionTypes::Order:: \"gz\";" >/etc/apt/apt.conf.d/docker-gzip-indexes
-RUN apt update && apt install -y
-RUN wget http://www.webmin.com/jcameron-key.asc && \
-    apt-key add jcameron-key.asc
+RUN apt update && apt install -y gnupg2
+RUN wget http://www.webmin.com/jcameron-key.asc && apt-key add jcameron-key.asc
 RUN echo "deb http://download.webmin.com/download/repository sarge contrib" >> /etc/apt/sources.list && \
     echo "deb http://webmin.mirror.somersettechsolutions.co.uk/repository sarge contrib" >> /etc/apt/sources.list
 RUN apt update && apt install -y webmin && apt clean
