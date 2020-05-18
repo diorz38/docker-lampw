@@ -18,14 +18,14 @@ echo "=> Setting directories permissions and owners"
 if [ -n "$VAGRANT_OSX_MODE" ];then
     usermod -u $DOCKER_USER_ID www-data
     groupmod -g $(($DOCKER_USER_GID + 10000)) $(getent group $DOCKER_USER_GID | cut -d: -f1)
-    groupmod -g ${DOCKER_USER_GID} staff
+    groupmod -g ${DOCKER_USER_GID} www-data
     chmod -R 770 /var/lib/mysql
     chmod -R 770 /var/run/mysqld
     chown -R www-data:www-data /var/lib/mysql
     chown -R www-data:www-data /var/run/mysqld
 else
     # Tweaks to give Apache/PHP write permissions
-    chown -R www-data:www-data /var/www
+    #chown -R www-data:www-data /var/www
     chown -R www-data:www-data /var/phpmyadmin
     chown -R www-data:www-data /var/lib/mysql
     chown -R www-data:www-data /var/run/mysqld

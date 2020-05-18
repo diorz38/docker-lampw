@@ -43,9 +43,9 @@ docker exec -it lamp bash
 docker ps -a
 
 # Updating to latest image
+# Pull latest image from https://hub.docker.com/repository/docker/karye/lampw
 docker stop karye/lampw
 docker rm karye/lampw
-# Pull latest image from https://hub.docker.com/repository/docker/karye/lampw
 docker pull karye/lampw
 ```
 
