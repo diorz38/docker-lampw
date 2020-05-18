@@ -2,7 +2,6 @@ FROM ubuntu:18.04
 
 ENV REFRESHED_AT 2020-05-16
 # Inspired on fauria/lamp
-# Based on https://github.com/783872453/docker-ubuntu-unattended-upgrades
 
 ENV DOCKER_USER_ID 501 
 ENV DOCKER_USER_GID 20
@@ -78,7 +77,9 @@ VOLUME  ["/var/www"]
 
 # Add homepage
 RUN mkdir /var/lampw
-COPY supporting_files/index.php /var/lampw
+COPY app/index.php /var/lampw
+COPY app/style.css /var/lampw
+COPY app/lamp.svg /var/lampw
 
 EXPOSE 80 10000
 

@@ -1,12 +1,12 @@
 # ![Docker-LAMPW][logo]
-Docker-LAMPW is based on mattrayner/lamp (18.04), eg a LAMP stack ([Apache][apache], [MySQL][mysql] and [PHP][php]).
+Docker-LAMPW is a LAMP stack ([Apache][apache], [MariaDB][mariadb] and [PHP][php]).
 
 Component | `latest-1804`
 ---|---
 [Apache][apache] |`2.4.29`
-[MySQL][mysql] |`5.7.30`
-[PHP][php] | `7.4.1`
-[Composer][composer] | `1.9.2`
+[MariaDB][mariadb] |`15.1`
+[PHP][php] | `7.2`
+[Composer][composer] | `1.6.3`
 [phpMyAdmin][phpmyadmin] | `4.9.5`
 [Webmin][webmin] | `1.941`
 
@@ -76,7 +76,7 @@ Docker-LAMPW is licensed under the [Apache 2.0 License][info-license].
 [logo]: https://cdn.rawgit.com/mattrayner/docker-lamp/831976c022782e592b7e2758464b2a9efe3da042/docs/logo.svg
 
 [apache]: http://www.apache.org/
-[mysql]: https://www.mysql.com/
+[mariadb]: https://mariadb.org/
 [php]: http://php.net/
 [composer]: https://getcomposer.org/
 [phpmyadmin]: https://www.phpmyadmin.net/
