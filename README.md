@@ -15,11 +15,9 @@ Component | `latest-1804`
 ```bash
 # For datapersistens two volumes are used:
 # /var/www i mapped to /home/user/github
-# /var/lib/mysql is mapped to /home/user/github/mysql-backup
 # Launch the image with autostart when docker start
 docker run --restart unless-stopped -d -p 8080:80 -p 10000:10000 \
 -v /home/user/github:/var/www \
--v /home/user/github/mysql-backup:/var/lib/mysql \
 --name lamp karye/lampw
 ```
 
@@ -27,11 +25,9 @@ docker run --restart unless-stopped -d -p 8080:80 -p 10000:10000 \
 ```powershell
 # For datapersistens two volumes are used:
 # /var/www i mapped to C:\github
-# /var/lib/mysql is mapped to C:\github\mysql-backup
 # Launch the image with autostart when docker start
 docker run -d --restart unless-stopped -p 8080:80 -p 10000:10000 `
 -v "C:\github:/var/www" `
--v "C:\github\mysql-backup:/var/lib/mysql" `
 --name lamp karye/lampw
 ```
 
