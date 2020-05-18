@@ -33,7 +33,7 @@ else
     chmod -R 770 /var/run/mysqld
 fi
 
-rm /var/run/mysqld/mysqld.sock*
+#rm /var/run/mysqld/mysqld.sock*
 
 sed -i "s/bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/my.cnf
 sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mariadb.conf.d/50-server.cnf
@@ -47,7 +47,8 @@ RET=1
 while [[ RET -ne 0 ]]; do
     echo "=> Waiting for confirmation of MySQL service startup"
     sleep 5
-    mysql -uroot -e "status" > /dev/null 2>&1
+    #mysql -uroot -e "status" > /dev/null 2>&1
+    ps aux | grep mysql
     RET=$?
 done
 
