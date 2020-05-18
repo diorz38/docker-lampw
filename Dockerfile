@@ -14,12 +14,12 @@ ENV TZ_CITY="Stockholm"
 
 # Tweaks to give Apache/PHP write permissions
 RUN usermod -u ${BOOT2DOCKER_ID} www-data && \
-    usermod -G staff www-data && \
+    usermod -G www-data www-data && \
     useradd -r mysql && \
-    usermod -G staff mysql
+    usermod -G www-data mysql
 
 RUN groupmod -g $(($BOOT2DOCKER_GID + 10000)) $(getent group $BOOT2DOCKER_GID | cut -d: -f1)
-RUN groupmod -g ${BOOT2DOCKER_GID} staff
+RUN groupmod -g ${BOOT2DOCKER_GID} www-data
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -77,8 +77,8 @@ RUN apt update && apt install -y webmin && apt clean
 VOLUME  ["/var/www"]
 
 # Add homepage
-RUN mkdir /var/lamp
-COPY supporting_files/index.php /var/lamp
+RUN mkdir /var/lampw
+COPY supporting_files/index.php /var/lampw
 
 EXPOSE 80 10000
 

@@ -10,3 +10,6 @@ Removing start-scripts for apache2, mysql, webmin
 # 0.4.0
 Using ubuntu image
 Changing from MySQL to MariaDB
+Adding webmin
+Changing to group www-data
+Adding Apache vhost lampw for summary of installation

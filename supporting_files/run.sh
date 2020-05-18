@@ -12,10 +12,9 @@ else
         -e "s/^post_max_size.*/post_max_size = ${PHP_POST_MAX_SIZE}/" /etc/php/7.2/apache2/php.ini
 fi
 
-sed -i "s/export APACHE_RUN_GROUP=www-data/export APACHE_RUN_GROUP=staff/" /etc/apache2/envvars
+sed -i "s/export APACHE_RUN_GROUP=www-data/export APACHE_RUN_GROUP=www-data/" /etc/apache2/envvars
 
 sed -i -e "s/cfg\['blowfish_secret'\] = ''/cfg['blowfish_secret'] = '`date | md5sum`'/" /var/phpmyadmin/config.inc.php
-
 
 #mkdir -p /var/run/mysqld
 
@@ -26,14 +25,14 @@ if [ -n "$VAGRANT_OSX_MODE" ];then
     groupmod -g ${DOCKER_USER_GID} staff
     chmod -R 770 /var/lib/mysql
     chmod -R 770 /var/run/mysqld
-    chown -R www-data:staff /var/lib/mysql
-    chown -R www-data:staff /var/run/mysqld
+    chown -R www-data:www-data /var/lib/mysql
+    chown -R www-data:www-data /var/run/mysqld
 else
     # Tweaks to give Apache/PHP write permissions
-#   chown -R www-data:staff /var/www
-    chown -R www-data:staff /var/phpmyadmin
-    chown -R www-data:staff /var/lib/mysql
-    chown -R www-data:staff /var/run/mysqld
+    chown -R www-data:www-data /var/www
+    chown -R www-data:www-data /var/phpmyadmin
+    chown -R www-data:www-data /var/lib/mysql
+    chown -R www-data:www-data /var/run/mysqld
     chmod -R 770 /var/lib/mysql
     chmod -R 770 /var/run/mysqld
 fi

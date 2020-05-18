@@ -16,8 +16,8 @@
                 Require all granted
         </Directory>
 
-        Alias /lampw /var/lamp
-        <Directory /var/lamp>
+        Alias /lampw /var/lampw
+        <Directory /var/lampw>
                 Options Indexes FollowSymLinks MultiViews
                 AllowOverride All
                 Require all granted
