@@ -1,7 +1,5 @@
 #!/bin/bash
 
-VOLUME_HOME="/var/lib/mysql"
-
 echo "=> Setting PHP filesizes"
 if [ -e /etc/php/5.6/apache2/php.ini ]
 then
@@ -15,8 +13,6 @@ fi
 sed -i "s/export APACHE_RUN_GROUP=www-data/export APACHE_RUN_GROUP=www-data/" /etc/apache2/envvars
 
 sed -i -e "s/cfg\['blowfish_secret'\] = ''/cfg['blowfish_secret'] = '`date | md5sum`'/" /var/phpmyadmin/config.inc.php
-
-#mkdir -p /var/run/mysqld
 
 echo "=> Setting directories permissions and owners"
 if [ -n "$VAGRANT_OSX_MODE" ];then

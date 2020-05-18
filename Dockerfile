@@ -73,7 +73,8 @@ RUN echo "deb http://download.webmin.com/download/repository sarge contrib" >> /
 RUN apt update && apt install -y webmin && apt clean
 
 # Add volume for the webroot
-VOLUME  ["/var/www"]
+VOLUME ["/var/www"]
+VOLUME ["/var/lib/mysql"]
 
 # Add homepage
 RUN mkdir /var/lampw
