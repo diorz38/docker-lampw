@@ -48,6 +48,7 @@ COPY supporting_files/run.sh /run.sh
 RUN chmod 755 /*.sh
 COPY supporting_files/supervisord-apache2.conf /etc/supervisor/conf.d/supervisord-apache2.conf
 COPY supporting_files/supervisord-mysqld.conf /etc/supervisor/conf.d/supervisord-mysqld.conf
+COPY supporting_files/supervisord-webmin.conf /etc/supervisor/conf.d/supervisord-webmin.conf
 
 # config to enable .htaccess
 COPY supporting_files/apache_default /etc/apache2/sites-available/000-default.conf
@@ -66,8 +67,8 @@ RUN mv /var/phpmyadmin/config.sample.inc.php /var/phpmyadmin/config.inc.php
 # Add webmin
 RUN echo root:pass | chpasswd
 RUN apt install -y perl libnet-ssleay-perl openssl libauthen-pam-perl libpam-runtime libio-pty-perl apt-show-versions python
-RUN wget http://prdownloads.sourceforge.net/webadmin/webmin_1.941_all.deb
-RUN dpkg --install webmin_1.941_all.deb
+RUN wget -O /tmp/webmin_1.941_all.deb http://prdownloads.sourceforge.net/webadmin/webmin_1.941_all.deb
+RUN dpkg --install /tmp/webmin_1.941_all.deb
 
 # Add volume for the webroot
 VOLUME  ["/var/www"]
