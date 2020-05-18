@@ -66,9 +66,13 @@ RUN mv /var/phpmyadmin/config.sample.inc.php /var/phpmyadmin/config.inc.php
 
 # Add webmin
 RUN echo root:pass | chpasswd
-RUN apt install -y perl libnet-ssleay-perl openssl libauthen-pam-perl libpam-runtime libio-pty-perl apt-show-versions python
-RUN wget -O /tmp/webmin_1.941_all.deb http://prdownloads.sourceforge.net/webadmin/webmin_1.941_all.deb
-RUN dpkg --install /tmp/webmin_1.941_all.deb
+RUN echo "Acquire::GzipIndexes \"false\"; Acquire::CompressionTypes::Order:: \"gz\";" >/etc/apt/apt.conf.d/docker-gzip-indexes
+RUN apt update && apt install -y
+RUN wget http://www.webmin.com/jcameron-key.asc && \
+    apt-key add jcameron-key.asc
+RUN echo "deb http://download.webmin.com/download/repository sarge contrib" >> /etc/apt/sources.list && \
+    echo "deb http://webmin.mirror.somersettechsolutions.co.uk/repository sarge contrib" >> /etc/apt/sources.list
+RUN apt update && apt install -y webmin && apt clean
 
 # Add volume for the webroot
 VOLUME  ["/var/www"]
