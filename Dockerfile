@@ -63,6 +63,12 @@ RUN tar xfvz /tmp/phpmyadmin.tar.gz -C /var
 RUN mv /var/phpMyAdmin-${PHPMYADMIN_VERSION}-all-languages /var/phpmyadmin
 RUN mv /var/phpmyadmin/config.sample.inc.php /var/phpmyadmin/config.inc.php
 
+# Add webmin
+RUN echo root:pass | chpasswd
+RUN apt install -y perl libnet-ssleay-perl openssl libauthen-pam-perl libpam-runtime libio-pty-perl apt-show-versions python
+RUN wget http://prdownloads.sourceforge.net/webadmin/webmin_1.941_all.deb
+RUN dpkg --install webmin_1.941_all.deb
+
 # Add volume for the webroot
 VOLUME  ["/var/www"]
 
