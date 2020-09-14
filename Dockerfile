@@ -30,6 +30,9 @@ RUN echo debconf debconf/frontend select Noninteractive | debconf-set-selections
 RUN echo tzdata tzdata/Areas select ${TZ_AREA} | debconf-set-selections
 RUN echo tzdata tzdata/Zones/Europe select ${TZ_CITY} | debconf-set-selections
 
+# Install languages
+RUN apt -y install language-pack-sv
+
 # Install packages
 RUN apt -y install nano supervisor wget git apache2 php php-xdebug pwgen \
     php-apcu php-gd php-xml php-mbstring php-gettext zip unzip php-zip curl \

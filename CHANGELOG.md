@@ -13,3 +13,5 @@ Changing from MySQL to MariaDB
 Adding webmin
 Changing to group www-data
 Adding Apache vhost lampw for summary of installation
+# 0.4.1
+Adding language pack för Sweden
