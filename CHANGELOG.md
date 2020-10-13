@@ -15,3 +15,5 @@ Changing to group www-data
 Adding Apache vhost lampw for summary of installation
 # 0.4.1
 Adding language pack för Sweden
+# 0.4.2
+Changing to hardcoded php-7.4, Must make it dynamic.
