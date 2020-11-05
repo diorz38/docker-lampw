@@ -17,3 +17,6 @@ Adding Apache vhost lampw for summary of installation
 Adding language pack för Sweden
 # 0.4.2
 Changing to hardcoded php-7.4, Must make it dynamic.
+# 0.5.0
+Adding nodejs v14
+Opening port 3000 for nodejs server

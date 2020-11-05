@@ -75,6 +75,10 @@ RUN echo "deb http://download.webmin.com/download/repository sarge contrib" >> /
     echo "deb http://webmin.mirror.somersettechsolutions.co.uk/repository sarge contrib" >> /etc/apt/sources.list
 RUN apt update && apt install -y webmin && apt clean
 
+# Add node v14
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
+RUN apt install -y nodejs
+
 # Add volume for the webroot
 VOLUME ["/var/www"]
 VOLUME ["/var/lib/mysql"]
@@ -85,6 +89,6 @@ COPY app/index.php /var/lampw
 COPY app/style.css /var/lampw
 COPY app/lamp.svg /var/lampw
 
-EXPOSE 80 10000
+EXPOSE 80 3000 10000
 
 CMD ["/run.sh"]
