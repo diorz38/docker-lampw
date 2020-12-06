@@ -20,3 +20,6 @@ Changing to hardcoded php-7.4, Must make it dynamic.
 # 0.5.0
 Adding nodejs v14
 Opening port 3000 for nodejs server
+# 0.5.1
+Adding cron
+Uppgrading to phpmyadmin-4.9.7

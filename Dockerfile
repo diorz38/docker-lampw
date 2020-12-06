@@ -7,7 +7,7 @@ ENV DOCKER_USER_ID 501
 ENV DOCKER_USER_GID 20
 ENV BOOT2DOCKER_ID 1000
 ENV BOOT2DOCKER_GID 50
-ENV PHPMYADMIN_VERSION=4.9.5
+ENV PHPMYADMIN_VERSION=4.9.7
 ENV TZ_AREA="Europe"
 ENV TZ_CITY="Stockholm"
 
@@ -37,7 +37,7 @@ RUN apt -y install language-pack-sv
 RUN apt -y install nano supervisor wget git apache2 php php-xdebug pwgen \
     php-apcu php-gd php-xml php-mbstring php-gettext zip unzip php-zip curl \
     php-curl pwgen php-apcu libapache2-mod-php php-mysql mariadb-server \
-    composer
+    composer cron
 
 # Needed for phpMyAdmin
 RUN phpenmod mbstring
