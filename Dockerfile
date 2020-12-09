@@ -1,13 +1,13 @@
 FROM ubuntu:18.04
-
-ENV REFRESHED_AT 2020-05-16
 # Inspired on fauria/lamp
 
+ENV REFRESHED_AT 2020-12-09
 ENV DOCKER_USER_ID 501 
 ENV DOCKER_USER_GID 20
 ENV BOOT2DOCKER_ID 1000
 ENV BOOT2DOCKER_GID 50
 ENV PHPMYADMIN_VERSION=4.9.7
+ENV NODE_VERSION=14
 ENV TZ_AREA="Europe"
 ENV TZ_CITY="Stockholm"
 
@@ -38,6 +38,10 @@ RUN apt -y install nano supervisor wget git apache2 php php-xdebug pwgen \
     php-apcu php-gd php-xml php-mbstring php-gettext zip unzip php-zip curl \
     php-curl pwgen php-apcu libapache2-mod-php php-mysql mariadb-server \
     composer cron
+
+# Install nodejs v14
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - && \
+    apt -y install nodejs
 
 # Needed for phpMyAdmin
 RUN phpenmod mbstring
@@ -75,9 +79,8 @@ RUN echo "deb http://download.webmin.com/download/repository sarge contrib" >> /
     echo "deb http://webmin.mirror.somersettechsolutions.co.uk/repository sarge contrib" >> /etc/apt/sources.list
 RUN apt update && apt install -y webmin && apt clean
 
-# Add node v14
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
-RUN apt install -y nodejs
+# Add nodejs
+RUN curl -sL https://deb.nodesource.com/setup_${NODE_VERSION}}.x | bash - && apt install -y nodejs
 
 # Add volume for the webroot
 VOLUME ["/var/www"]

@@ -1,14 +1,16 @@
 # ![Docker-LAMPW][logo]
 Docker-LAMPW is a LAMP stack ([Apache][apache], [MariaDB][mariadb] and [PHP][php]).
+Now including [Node.js][node.js].
 
 Component | `latest-1804`
 ---|---
 [Apache][apache] |`2.4.29`
 [MariaDB][mariadb] |`15.1`
-[PHP][php] | `7.2`
+[PHP][php] | `7.4`
 [Composer][composer] | `1.6.3`
 [phpMyAdmin][phpmyadmin] | `4.9.5`
 [Webmin][webmin] | `1.941`
+[Node.js][node.js] |`14`
 
 ## Using the image
 ### Launching in Linux
@@ -16,9 +18,8 @@ Component | `latest-1804`
 # For datapersistens two volumes are used:
 # /var/www i mapped to /home/user/github
 # Launch the image with autostart when docker start
-docker run --restart unless-stopped -d -p 8080:80 -p 10000:10000 \
--v /home/user/github:/var/www \
---name lamp karye/lampw
+docker run --restart unless-stopped -d -p 8080:80 -p 3000:3000 -p 10000:10000 \
+-v /home/user/github:/var/www --name lamp karye/lampw
 ```
 
 ### Launching in Windows
@@ -27,8 +28,7 @@ docker run --restart unless-stopped -d -p 8080:80 -p 10000:10000 \
 # /var/www i mapped to C:\github
 # Launch the image with autostart when docker start
 docker run -d --restart unless-stopped -p 8080:80 -p 10000:10000 `
--v "C:\github:/var/www" `
---name lamp karye/lampw
+-v "C:\github:/var/www" --name lamp karye/lampw
 ```
 
 ## Useful Docker commands
@@ -73,6 +73,7 @@ Docker-LAMPW is licensed under the [Apache 2.0 License][info-license].
 
 [apache]: http://www.apache.org/
 [mariadb]: https://mariadb.org/
+[nodejs]: https://nodejs.org/
 [php]: http://php.net/
 [composer]: https://getcomposer.org/
 [phpmyadmin]: https://www.phpmyadmin.net/

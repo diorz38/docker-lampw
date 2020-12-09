@@ -16,10 +16,10 @@ Adding Apache vhost lampw for summary of installation
 # 0.4.1
 Adding language pack för Sweden
 # 0.4.2
-Changing to hardcoded php-7.4, Must make it dynamic.
-# 0.5.0
-Adding nodejs v14
-Opening port 3000 for nodejs server
+Changing to hardcoded php-7.4, must make it dynamic.
 # 0.5.1
 Adding cron
 Uppgrading to phpmyadmin-4.9.7
+# 0.6.0
+Adding nodejs v14
+Opening port 3000 for nodejs server
