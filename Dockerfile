@@ -39,7 +39,7 @@ RUN apt -y install nano supervisor wget git apache2 php php-xdebug pwgen \
     php-curl pwgen php-apcu libapache2-mod-php php-mysql mariadb-server \
     composer cron
 
-# Install nodejs v14
+# Install nodejs
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - && \
     apt -y install nodejs
 

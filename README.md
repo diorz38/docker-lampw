@@ -1,16 +1,16 @@
 # ![Docker-LAMPW][logo]
 Docker-LAMPW is a LAMP stack ([Apache][apache], [MariaDB][mariadb] and [PHP][php]).
-Now including [Node.js][node.js].
+Now including [Node.js][nodejs].
 
 Component | `latest-1804`
 ---|---
-[Apache][apache] |`2.4.29`
-[MariaDB][mariadb] |`15.1`
-[PHP][php] | `7.4`
-[Composer][composer] | `1.6.3`
-[phpMyAdmin][phpmyadmin] | `4.9.5`
-[Webmin][webmin] | `1.941`
-[Node.js][node.js] |`14`
+[Apache][apache] |`2.4`
+[MariaDB][mariadb] |`10.1`
+[PHP][php] |`7.2`
+[Composer][composer] |`1.6.3`
+[phpMyAdmin][phpmyadmin] |`4.9.5`
+[Webmin][webmin] |`1.962`
+[Node.js][nodejs] |`14`
 
 ## Using the image
 ### Launching in Linux
@@ -27,7 +27,7 @@ docker run --restart unless-stopped -d -p 8080:80 -p 3000:3000 -p 10000:10000 \
 # For datapersistens two volumes are used:
 # /var/www i mapped to C:\github
 # Launch the image with autostart when docker start
-docker run -d --restart unless-stopped -p 8080:80 -p 10000:10000 `
+docker run -d --restart unless-stopped -p 8080:80 -p 3000:3000 -p 10000:10000 `
 -v "C:\github:/var/www" --name lamp karye/lampw
 ```
 
@@ -80,6 +80,5 @@ Docker-LAMPW is licensed under the [Apache 2.0 License][info-license].
 [Webmin]: http://www.webmin.com/
 
 [end-of-life]: http://php.net/supported-versions.php
-
 [info-docker-hub]: https://hub.docker.com/r/mattrayner/lamp
 [info-license]: LICENSE

@@ -16,7 +16,7 @@ Adding Apache vhost lampw for summary of installation
 # 0.4.1
 Adding language pack för Sweden
 # 0.4.2
-Changing to hardcoded php-7.4, must make it dynamic.
+Changing to hardcoded php-7.2, must make it dynamic.
 # 0.5.1
 Adding cron
 Uppgrading to phpmyadmin-4.9.7
