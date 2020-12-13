@@ -6,10 +6,16 @@ ENV DOCKER_USER_ID 501
 ENV DOCKER_USER_GID 20
 ENV BOOT2DOCKER_ID 1000
 ENV BOOT2DOCKER_GID 50
-ENV PHPMYADMIN_VERSION=4.9.7
-ENV NODE_VERSION=14
-ENV TZ_AREA="Europe"
-ENV TZ_CITY="Stockholm"
+# ENV PHPMYADMIN_VERSION=4.9.7
+# ENV NODE_VERSION=14
+# ENV TIMEZONE_AREA="Europe"
+# ENV TIMEZONE_CITY="Stockholm"
+
+ARG PHP_VERSION=7.3
+ARG PHPMYADMIN_VERSION=4.9.7
+ARG NODE_VERSION=14
+ARG TIMEZONE_AREA="Europe"
+ARG TIMEZONE_CITY="Stockholm"
 
 # Tweaks to give Apache/PHP write permissions
 RUN usermod -u ${BOOT2DOCKER_ID} www-data && \
@@ -27,8 +33,8 @@ RUN apt update && apt -y upgrade
 
 # Set environment variables
 RUN echo debconf debconf/frontend select Noninteractive | debconf-set-selections
-RUN echo tzdata tzdata/Areas select ${TZ_AREA} | debconf-set-selections
-RUN echo tzdata tzdata/Zones/Europe select ${TZ_CITY} | debconf-set-selections
+RUN echo tzdata tzdata/Areas select ${TIMEZONE_AREA} | debconf-set-selections
+RUN echo tzdata tzdata/Zones/Europe select ${TIMEZONE_CITY} | debconf-set-selections
 
 # Install languages
 RUN apt -y install language-pack-sv

@@ -6,7 +6,7 @@ Component | `latest-1804`
 ---|---
 [Apache][apache] |`2.4`
 [MariaDB][mariadb] |`10.1`
-[PHP][php] |`7.2`
+[PHP][php] |`7.3`
 [Composer][composer] |`1.6.3`
 [phpMyAdmin][phpmyadmin] |`4.9.5`
 [Webmin][webmin] |`1.962`
