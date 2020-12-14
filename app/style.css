@@ -15,6 +15,8 @@ section {
     background-color: #f7f7f7;
     border-radius: 3px;
     padding: 1em;
+    border: 1px solid #f3f3f3;
+    border-radius: 1em;
 }
 pre {
     font-family: 'Source Code Pro', monospace;

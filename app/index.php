@@ -9,23 +9,18 @@
 <body>
     <div class="container">
         <header>
-            <img src="lamp.svg" alt="Docker LAMP logo" />
+            <img src="lamp.svg" alt="Docker LAMP logo">
         </header>
         <section>
 <pre>
 OS: <?php echo php_uname(); ?><br>
 Apache version: <?php echo apache_get_version(); ?><br>
 MariaDB version: <?php $b = exec('mysql -V'); echo substr($b, 10, 7); ?><br>
-PHP version: <?php echo phpversion(); ?><br>
+PHP version: <?php echo getenv('PHP_VERSION'); ?><br>
 phpMyAdmin version: <?php echo getenv('PHPMYADMIN_VERSION'); ?><br>
 Webmin version: 1.490<br>
-Timezone: <?php echo getenv('TZ_AREA') . "/" . getenv('TZ_CITY'); ?><br>
+Timezone: <?php echo date_default_timezone_get(); ?><br>
 </pre>
-        </section>
-        <section>
-            <?php
-            echo phpinfo();
-            ?>
         </section>
     </div>
 </body>

@@ -1,17 +1,25 @@
 FROM ubuntu:18.04
 # Inspired on fauria/lamp
 
-ENV REFRESHED_AT 2020-12-09
+ENV REFRESHED_AT 2020-12-14
 ENV DOCKER_USER_ID 501 
 ENV DOCKER_USER_GID 20
 ENV BOOT2DOCKER_ID 1000
 ENV BOOT2DOCKER_GID 50
 
-ARG PHP_VERSION=7.3
+ARG PHP_VERSION=7.2
 ARG PHPMYADMIN_VERSION=4.9.7
 ARG NODE_VERSION=14
 ARG TIMEZONE_AREA="Europe"
 ARG TIMEZONE_CITY="Stockholm"
+
+ENV PHPMYADMIN_VERSION=${PHPMYADMIN_VERSION}
+ENV PHP_VERSION=${PHP_VERSION}
+ENV TIMEZONE=${TIMEZONE_AREA}/${TIMEZONE_CITY}
+
+# Environment variables to configure php
+ENV PHP_UPLOAD_MAX_FILESIZE 10M
+ENV PHP_POST_MAX_SIZE 10M
 
 # Tweaks to give Apache/PHP write permissions
 RUN usermod -u ${BOOT2DOCKER_ID} www-data && \
@@ -19,7 +27,7 @@ RUN usermod -u ${BOOT2DOCKER_ID} www-data && \
     useradd -r mysql && \
     usermod -G www-data mysql
 
-RUN groupmod -g $(($BOOT2DOCKER_GID + 10000)) $(getent group $BOOT2DOCKER_GID | cut -d: -f1)
+RUN groupmod -g $(($BOOT2DOCKER_GID + 10000)) $(getent group ${BOOT2DOCKER_GID} | cut -d: -f1)
 RUN groupmod -g ${BOOT2DOCKER_GID} www-data
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -61,10 +69,6 @@ COPY supporting_files/supervisord-webmin.conf /etc/supervisor/conf.d/supervisord
 # config to enable .htaccess
 COPY supporting_files/apache_default /etc/apache2/sites-available/000-default.conf
 RUN a2enmod rewrite
-
-# Environment variables to configure php
-ENV PHP_UPLOAD_MAX_FILESIZE 10M
-ENV PHP_POST_MAX_SIZE 10M
 
 # Add phpmyadmin
 RUN wget -O /tmp/phpmyadmin.tar.gz https://files.phpmyadmin.net/phpMyAdmin/${PHPMYADMIN_VERSION}/phpMyAdmin-${PHPMYADMIN_VERSION}-all-languages.tar.gz

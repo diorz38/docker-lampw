@@ -1,13 +1,11 @@
 #!/bin/bash
 
 echo "=> Setting PHP filesizes"
-if [ -e /etc/php/5.6/apache2/php.ini ]
-then
+if [ -e /etc/php/${PHP_VERSION}/apache2/php.ini ] ;then
     sed -ri -e "s/^upload_max_filesize.*/upload_max_filesize = ${PHP_UPLOAD_MAX_FILESIZE}/" \
-        -e "s/^post_max_size.*/post_max_size = ${PHP_POST_MAX_SIZE}/" /etc/php/5.6/apache2/php.ini
-else
-    sed -ri -e "s/^upload_max_filesize.*/upload_max_filesize = ${PHP_UPLOAD_MAX_FILESIZE}/" \
-        -e "s/^post_max_size.*/post_max_size = ${PHP_POST_MAX_SIZE}/" /etc/php/${PHP_VERSION}/apache2/php.ini
+        -e "s/^post_max_size.*/post_max_size = ${PHP_POST_MAX_SIZE}/" \
+        -e "s/^;date.timezone =*/date.timezone = \"${TIMEZONE}\"/" \
+        /etc/php/${PHP_VERSION}/apache2/php.ini
 fi
 
 sed -i "s/export APACHE_RUN_GROUP=www-data/export APACHE_RUN_GROUP=www-data/" /etc/apache2/envvars
@@ -15,7 +13,7 @@ sed -i "s/export APACHE_RUN_GROUP=www-data/export APACHE_RUN_GROUP=www-data/" /e
 sed -i -e "s/cfg\['blowfish_secret'\] = ''/cfg['blowfish_secret'] = '`date | md5sum`'/" /var/phpmyadmin/config.inc.php
 
 echo "=> Setting directories permissions and owners"
-if [ -n "$VAGRANT_OSX_MODE" ];then
+if [ -n "$VAGRANT_OSX_MODE" ] ;then
     usermod -u $DOCKER_USER_ID www-data
     groupmod -g $(($DOCKER_USER_GID + 10000)) $(getent group $DOCKER_USER_GID | cut -d: -f1)
     groupmod -g ${DOCKER_USER_GID} www-data
