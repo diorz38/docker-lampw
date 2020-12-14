@@ -1,25 +1,25 @@
 FROM ubuntu:18.04
 # Inspired on fauria/lamp
 
-ENV REFRESHED_AT 2020-12-14
-ENV DOCKER_USER_ID 501 
-ENV DOCKER_USER_GID 20
-ENV BOOT2DOCKER_ID 1000
-ENV BOOT2DOCKER_GID 50
+ENV REFRESHED_AT=2020-12-14
+ENV DOCKER_USER_ID=501 
+ENV DOCKER_USER_GID=20
+ENV BOOT2DOCKER_ID=1000
+ENV BOOT2DOCKER_GID=50
 
 ARG PHP_VERSION=7.2
 ARG PHPMYADMIN_VERSION=4.9.7
 ARG NODE_VERSION=14
-ARG TIMEZONE_AREA="Europe"
-ARG TIMEZONE_CITY="Stockholm"
+ARG TIMEZONE_AREA=Europe
+ARG TIMEZONE_CITY=Stockholm
 
 ENV PHPMYADMIN_VERSION=${PHPMYADMIN_VERSION}
 ENV PHP_VERSION=${PHP_VERSION}
 ENV TIMEZONE=${TIMEZONE_AREA}/${TIMEZONE_CITY}
 
 # Environment variables to configure php
-ENV PHP_UPLOAD_MAX_FILESIZE 10M
-ENV PHP_POST_MAX_SIZE 10M
+ENV PHP_UPLOAD_MAX_FILESIZE=10M
+ENV PHP_POST_MAX_SIZE=10M
 
 # Tweaks to give Apache/PHP write permissions
 RUN usermod -u ${BOOT2DOCKER_ID} www-data && \
@@ -50,7 +50,7 @@ RUN apt -y install nano supervisor wget git apache2 php php-xdebug pwgen \
     composer cron
 
 # Install nodejs
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - && \
+RUN curl -sL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash - && \
     apt -y install nodejs
 
 # Needed for phpMyAdmin
@@ -84,9 +84,6 @@ RUN wget http://www.webmin.com/jcameron-key.asc && apt-key add jcameron-key.asc
 RUN echo "deb http://download.webmin.com/download/repository sarge contrib" >> /etc/apt/sources.list && \
     echo "deb http://webmin.mirror.somersettechsolutions.co.uk/repository sarge contrib" >> /etc/apt/sources.list
 RUN apt update && apt install -y webmin && apt clean
-
-# Add nodejs
-RUN curl -sL https://deb.nodesource.com/setup_${NODE_VERSION}}.x | bash - && apt install -y nodejs
 
 # Add volume for the webroot
 VOLUME ["/var/www"]
