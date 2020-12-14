@@ -1,26 +1,25 @@
 @import 'https://fonts.googleapis.com/css?family=Montserrat|Raleway|Source+Code+Pro';
-
 body {
     font-family: 'Raleway', sans-serif;
 }
-
 h2 {
     font-family: 'Montserrat', sans-serif;
-}
-
-pre {
-    font-family: 'Source Code Pro', monospace;
-    padding: 16px;
-    overflow: auto;
-    font-size: 85%;
-    line-height: 1.45;
-    background-color: #f7f7f7;
-    border-radius: 3px;
-    word-wrap: normal;
 }
 
 .container {
     max-width: 1024px;
     width: 100%;
     margin: 0 auto;
+}
+section {
+    background-color: #f7f7f7;
+    border-radius: 3px;
+    padding: 1em;
+}
+pre {
+    font-family: 'Source Code Pro', monospace;
+    overflow: auto;
+    font-size: 85%;
+    line-height: 1.45;
+    word-wrap: normal;
 }

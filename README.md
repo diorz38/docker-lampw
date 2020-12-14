@@ -31,6 +31,9 @@ docker run -d --restart unless-stopped -p 8080:80 -p 3000:3000 -p 10000:10000 `
 -v "C:\github:/var/www" --name lamp karye/lampw
 ```
 
+### Test installation
+Launch `http://localhost:8080/lampw` to test webbserver is up and setup info.
+
 ## Useful Docker commands
 ```shell
 # View logg
