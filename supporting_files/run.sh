@@ -1,19 +1,21 @@
 #!/bin/bash
 
-echo "=> Setting PHP filesizes and timezone"
-if [ -e /etc/php/${PHP_VERSION}/apache2/php.ini ] ;then
-    sed -ri -e "s/^upload_max_filesize.*/upload_max_filesize = ${PHP_UPLOAD_MAX_FILESIZE}/" \
-        -e "s/^post_max_size.*/post_max_size = ${PHP_POST_MAX_SIZE}/" \
-        -e "s/^;date.timezone =*/date.timezone = \"${TIMEZONE}\"/" \
+if [ -e /etc/php/${PHP_VERSION}/apache2/php.ini ]
+then
+    echo "=> Setting PHP filesizes and timezone"
+    sed -ri -e "s|^upload_max_filesize.*|upload_max_filesize = ${PHP_UPLOAD_MAX_FILESIZE}|" \
+        -e "s|^post_max_size.*|post_max_size = ${PHP_POST_MAX_SIZE}|" \
+        -e "s|^;date.timezone =*|date.timezone = \"${TIMEZONE}\"|" \
         /etc/php/${PHP_VERSION}/apache2/php.ini
 fi
 
-sed -i "s/export APACHE_RUN_GROUP=www-data/export APACHE_RUN_GROUP=www-data/" /etc/apache2/envvars
+sed -i "s|export APACHE_RUN_GROUP=www-data|export APACHE_RUN_GROUP=www-data|" /etc/apache2/envvars
 
-sed -i -e "s/cfg\['blowfish_secret'\] = ''/cfg['blowfish_secret'] = '`date | md5sum`'/" /var/phpmyadmin/config.inc.php
+sed -i -e "s|cfg\['blowfish_secret'\] = ''|cfg['blowfish_secret'] = '`date | md5sum`'|" /var/phpmyadmin/config.inc.php
 
 echo "=> Setting directories permissions and owners"
-if [ -n "$VAGRANT_OSX_MODE" ] ;then
+if [ -n "$VAGRANT_OSX_MODE" ]
+then
     usermod -u $DOCKER_USER_ID www-data
     groupmod -g $(($DOCKER_USER_GID + 10000)) $(getent group $DOCKER_USER_GID | cut -d: -f1)
     groupmod -g ${DOCKER_USER_GID} www-data
@@ -33,9 +35,9 @@ fi
 
 #rm /var/run/mysqld/mysqld.sock*
 
-sed -i "s/bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/my.cnf
-sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mariadb.conf.d/50-server.cnf
-sed -i "s/user.*/user = www-data/" /etc/mysql/my.cnf
+sed -i "s|bind-address.*|bind-address = 0.0.0.0|" /etc/mysql/my.cnf
+sed -i "s|.*bind-address.*|bind-address = 0.0.0.0|" /etc/mysql/mariadb.conf.d/50-server.cnf
+sed -i "s|user.*|user = www-data|" /etc/mysql/my.cnf
 
 /usr/bin/touch /var/webmin/miniserv.log
 
