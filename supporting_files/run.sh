@@ -9,7 +9,7 @@ then
         /etc/php/${PHP_VERSION}/apache2/php.ini
 fi
 
-sed -i "s|export APACHE_RUN_GROUP=www-data|export APACHE_RUN_GROUP=www-data|" /etc/apache2/envvars
+#sed -i "s|export APACHE_RUN_GROUP=www-data|export APACHE_RUN_GROUP=www-data|" /etc/apache2/envvars
 
 sed -i -e "s|cfg\['blowfish_secret'\] = ''|cfg['blowfish_secret'] = '`date | md5sum`'|" /var/phpmyadmin/config.inc.php
 
@@ -32,8 +32,6 @@ else
     chmod -R 770 /var/lib/mysql
     chmod -R 770 /var/run/mysqld
 fi
-
-#rm /var/run/mysqld/mysqld.sock*
 
 sed -i "s|bind-address.*|bind-address = 0.0.0.0|" /etc/mysql/my.cnf
 sed -i "s|.*bind-address.*|bind-address = 0.0.0.0|" /etc/mysql/mariadb.conf.d/50-server.cnf
