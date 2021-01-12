@@ -50,11 +50,11 @@ while [[ RET -ne 0 ]]; do
     RET=$?
 done
 
-_user="admin"
-_word="pass"
-echo "=> Creating MySQL admin user with ${_word} password"
+USER="admin"
+PASS="pass"
+echo "=> Creating MySQL admin user with $PASS password"
 
-mysql -uroot -e "GRANT ALL ON *.* TO '${_user}'@'localhost' IDENTIFIED BY '${_word}' WITH GRANT OPTION"
+mysql -uroot -e "GRANT ALL ON *.* TO '${USER}'@'localhost' IDENTIFIED BY '${PASS}' WITH GRANT OPTION"
 mysql -uroot -e "FLUSH PRIVILEGES"
 
 echo "========================================================================"

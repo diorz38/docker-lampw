@@ -8,14 +8,18 @@ Component | `latest-1804`
 [MariaDB][mariadb] |`10.1`
 [PHP][php] |`7.3`
 [Composer][composer] |`1.6.3`
-[phpMyAdmin][phpmyadmin] |`4.9.5`
+[phpMyAdmin][phpmyadmin] |`5.0.2`
 [Webmin][webmin] |`1.962`
 [Node.js][nodejs] |`14`
 
 ## Using the image
+### Open ports
+* Web is accessed on port 8080
+* Webmin is accessed on port 10000
+* Nodejs is accessed on port 3000
+
 ### Launching in Linux
 ```bash
-# For datapersistens two volumes are used:
 # /var/www i mapped to /home/user/github
 # Launch the image with autostart when docker start
 docker run --restart unless-stopped -d -p 8080:80 -p 3000:3000 -p 10000:10000 \
@@ -24,7 +28,6 @@ docker run --restart unless-stopped -d -p 8080:80 -p 3000:3000 -p 10000:10000 \
 
 ### Launching in Windows
 ```powershell
-# For datapersistens two volumes are used:
 # /var/www i mapped to C:\github
 # Launch the image with autostart when docker start
 docker run -d --restart unless-stopped -p 8080:80 -p 3000:3000 -p 10000:10000 `
@@ -32,7 +35,7 @@ docker run -d --restart unless-stopped -p 8080:80 -p 3000:3000 -p 10000:10000 `
 ```
 
 ### Test installation
-Launch `http://localhost:8080/lampw` to test webbserver is up and setup info.
+Launch `http://localhost:8080/lampw` to test webbserver is up and list setup info.
 
 ## Useful Docker commands
 ```shell
@@ -53,20 +56,25 @@ docker pull karye/lampw
 ```
 
 ## Project layout
-The website `http://localhost:8080` is mapped to '/var/www/' in the docker container.
+### The webroot
+The url `http://localhost:8080` is mapped to '/var/www/' in the docker container.
 ```
 / (project root)
 /var/www/ (your folders and files live here)
 ```
 
+### The databases
+Database data is located on a separate volume for datapersistens.
+The databases will therefore not be lost when reinstalling or upgrading LAMPW. 
+
 ## Administration
 ### webmin
-Docker-LAMPW comes pre-installed with Webmin available from `https://localhost:10000`.\
+Docker-LAMPW comes pre-installed with Webmin available at `https://localhost:10000`.\
 Login in with user **root** and password **pass**.\
 Local timezone is 'Europe/Stockholm'. You may change timezone in Webmin.
 
 ### PHPMyAdmin
-Docker-LAMPW comes pre-installed with phpMyAdmin available from `http://localhost:8000/phpmyadmin`.\
+Docker-LAMPW comes pre-installed with phpMyAdmin available at `http://localhost:8000/phpmyadmin`.\
 Login in with user **admin** and password **pass**.
 
 ## License

@@ -1,5 +1,5 @@
 FROM ubuntu:18.04
-# Inspired on fauria/lamp
+# Inspired by fauria/lamp
 
 ENV REFRESHED_AT=2020-12-14
 ENV DOCKER_USER_ID=501 
@@ -8,7 +8,7 @@ ENV BOOT2DOCKER_ID=1000
 ENV BOOT2DOCKER_GID=50
 
 ARG PHP_VERSION=7.2
-ARG PHPMYADMIN_VERSION=4.9.7
+ARG PHPMYADMIN_VERSION=5.0.4
 ARG NODE_VERSION=14
 ARG TIMEZONE_AREA=Europe
 ARG TIMEZONE_CITY=Stockholm
@@ -95,6 +95,7 @@ COPY app/index.php /var/lampw
 COPY app/style.css /var/lampw
 COPY app/lamp.svg /var/lampw
 
+# Open ports in firewall
 EXPOSE 80 3000 10000
 
 CMD ["/run.sh"]
