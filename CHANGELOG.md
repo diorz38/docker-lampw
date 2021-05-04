@@ -25,3 +25,5 @@ Adding nodejs v14
 Opening port 3000 for nodejs server
 # 0.6.1
 Uppgrading to phpmyadmin-5.0.2
+# 0.6.2
+Uppgrading to phpmyadmin-5.1.0
