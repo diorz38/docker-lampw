@@ -23,7 +23,7 @@ Component | `latest-1804`
 # /var/www i mapped to /home/user/github
 # Launch the image with autostart when docker start
 docker run --restart unless-stopped -d -p 8080:80 -p 3000:3000 -p 10000:10000 \
--v /home/user/github:/var/www --name lamp karye/lampw
+-v /home/user/github:/var/www -v mysql-data:/var/lib/mysql --name lamp karye/lampw
 ```
 
 ### Launching in Windows
@@ -31,7 +31,7 @@ docker run --restart unless-stopped -d -p 8080:80 -p 3000:3000 -p 10000:10000 \
 # /var/www i mapped to C:\github
 # Launch the image with autostart when docker start
 docker run -d --restart unless-stopped -p 8080:80 -p 3000:3000 -p 10000:10000 `
--v "C:\github:/var/www" --name lamp karye/lampw
+-v "C:\github:/var/www" -v "mysql-data:/var/lib/mysql" --name lamp karye/lampw
 ```
 
 ### Test installation

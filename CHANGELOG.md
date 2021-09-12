@@ -27,3 +27,6 @@ Opening port 3000 for nodejs server
 Uppgrading to phpmyadmin-5.0.2
 # 0.6.2
 Uppgrading to phpmyadmin-5.1.0
+# 0.6.3
+Simplifying bash prompt
+Fixing typo in Docker run command

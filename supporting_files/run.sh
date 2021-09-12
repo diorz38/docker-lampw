@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Simplify 
-"PS1='root> '" >> /root/.bashrc
-
 if [ -e /etc/php/${PHP_VERSION}/apache2/php.ini ]
 then
     echo "=> Setting PHP filesizes and timezone"

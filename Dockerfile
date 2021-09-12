@@ -98,6 +98,9 @@ COPY app/index.php /var/lampw
 COPY app/style.css /var/lampw
 COPY app/lamp.svg /var/lampw
 
+# Simplify prompt
+COPY supporting_files/.bashrc /root/
+
 # Open ports in firewall
 EXPOSE 80 3000 10000
 
